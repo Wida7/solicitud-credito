@@ -46,7 +46,7 @@ export default function HeroSection() {
 										asChild
 										className="m-4"
 										variant="default">
-										<Link href="#link">
+										<Link href="/application-process">
 											<span className="text-nowrap">
 												¡Empezar ahora!
 											</span>
