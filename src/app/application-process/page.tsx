@@ -62,7 +62,10 @@ export default function Home() {
       try {
 
         await dispatch(createApplication(formData)).unwrap();
-        toast.success("Solicitud enviada correctamente");
+        toast.success("Solicitud enviada correctamente", {
+          position: "top-center",
+          className: "bg-black text-white font-semibold",
+        });
         nextStep();
 
       } catch (error: any) {

@@ -3,8 +3,8 @@ import { Geist, Geist_Mono, Figtree } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { HeroHeader } from "@/components/header";
-import { Providers } from "./providers";
 import { Toaster } from "sonner";
+import ReduxProvider from "@/infrastructure/providers/ReduxProvider";
 
 
 const figtree = Figtree({ subsets: ['latin'], variable: '--font-sans' });
@@ -35,12 +35,11 @@ export default function RootLayout({
       className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-sans", figtree.variable)}
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
-        
-        <Providers>
+        <ReduxProvider>
           <HeroHeader />
           {children}
           <Toaster />
-        </Providers>
+        </ReduxProvider>
       </body>
     </html>
   );

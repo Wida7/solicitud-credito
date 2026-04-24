@@ -1,11 +1,34 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { rootReducer } from "./rootReducer";
 
-//Creación del store de Redux
+import {
+  persistStore,
+  persistReducer,
+} from "redux-persist";
+import storage from "redux-persist/lib/storage";
+
+// 🔐 Configuración de persistencia
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["application"], // 👈 solo este slice se persiste
+};
+
+// 🔁 Reducer persistido
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+// 🏗️ Store
 export const store = configureStore({
-  // Aquí combinamos los reducers de cada slice
-  reducer: rootReducer,
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false, // necesario para redux-persist
+    }),
 });
 
+// 💾 Persistor
+export const persistor = persistStore(store);
+
+// 📦 Tipos
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
