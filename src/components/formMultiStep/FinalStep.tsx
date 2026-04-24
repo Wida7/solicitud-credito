@@ -13,30 +13,8 @@ type StepProps = FormItems & {
   goTo: (index: number) => void;
 };
 
-const FinalStep = ({ yearly, plazo, monto, addOns, cuotaAprox, goTo }: StepProps) => {
-  let planPrice = 0;
-  switch (plazo) {
-    case 1:
-      planPrice = 9;
-      break;
-    case 3:
-      planPrice = 12;
-      break;
-    case 5:
-      planPrice = 15;
-      break;
-    default:
-      planPrice = 0;
-      break;
-  }
+const FinalStep = ({ yearly, plazo, monto, cuotaAprox, goTo }: StepProps) => {
 
-  const filteredAddOns = addOns.filter((addOn) => addOn.checked === true);
-
-  const totalAddOnsPrice = filteredAddOns?.reduce(
-    (acc, obj) => acc + obj.price,
-    0
-  );
-  console.log(totalAddOnsPrice);
 
   return (
     <FormWrapper
@@ -73,16 +51,14 @@ const FinalStep = ({ yearly, plazo, monto, addOns, cuotaAprox, goTo }: StepProps
             </div>
             <Image src={calendario} alt="calendario" width="40" height="40" />
           </div>
-          {filteredAddOns.length > 0 && <Separator className="my-4" />}
-          {filteredAddOns?.map((addOn) => (
+          
             <div
               className="flex justify-between items-center my-2"
-              key={addOn.id}
+              key="cuotaAprox"
             >
               <p className="text-neutral-400">Valor cuota aproximada:</p>
               <p className="">{formatCurrency(cuotaAprox ?? 0)}</p>
             </div>
-          ))}
         </div>
 
       </div>

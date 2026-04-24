@@ -12,13 +12,6 @@ import SuccessMessage from "@/components/formMultiStep/SuccessMessage";
 import SideBar from "@/components/formMultiStep/SideBar";
 import { formatCurrency } from "@/lib/utils/formatCurrency";
 
-interface AddOn {
-  id: number;
-  checked: boolean;
-  title: string;
-  subtitle: string;
-  price: number;
-}
 
 export type FormItems = {
   name: string;
@@ -33,7 +26,6 @@ export type FormItems = {
   ingresos: number;
   egresos: number;
   yearly: boolean;
-  addOns: AddOn[];
 };
 
 const initialValues: FormItems = {
@@ -48,29 +40,6 @@ const initialValues: FormItems = {
   ingresos: 0,
   egresos: 0,
   yearly: false,
-  addOns: [
-    {
-      id: 1,
-      checked: true,
-      title: "Online Service",
-      subtitle: "Access to multiple games",
-      price: 1,
-    },
-    {
-      id: 2,
-      checked: false,
-      title: "Large storage",
-      subtitle: "Extra 1TB of cloud save",
-      price: 2,
-    },
-    {
-      id: 3,
-      checked: false,
-      title: "Customizable Profile",
-      subtitle: "Custom theme on your profile",
-      price: 2,
-    },
-  ],
 };
 
 export default function Home() {
@@ -140,11 +109,17 @@ export default function Home() {
         phone: "",
       }));
     }
-
+    
+    //console.log(fieldToUpdate.monto, constansValidation.monto.min)
     if (fieldToUpdate.monto !== undefined && fieldToUpdate.monto < constansValidation.monto.min) {
       setErrors((prevState) => ({
         ...prevState,
         monto: `El monto no puede ser menor a:  ${formatCurrency(constansValidation.monto.min)}`,
+      }));
+    } else {
+      setErrors((prevState) => ({
+        ...prevState,
+        monto: "",
       }));
     }
 
