@@ -1,9 +1,24 @@
-import Image from "next/image";
+import { applicationApi } from "@/modules/application/services/applicationApi";
 
-export default function Home() {
+export default async function ReviewsPage() {
+  const applications = await applicationApi.list();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      administration page
+    <div className="p-4">
+      <h1 className="text-xl font-bold mb-4">Solicitudes</h1>
+
+      {applications.length === 0 ? (
+        <p>No hay solicitudes aún</p>
+      ) : (
+        applications.map((app) => (
+          <div key={app.id} className="border p-3 rounded mb-2">
+            <p><strong>Nombre:</strong> {app.name}</p>
+            <p><strong>Email:</strong> {app.email}</p>
+            <p><strong>Monto:</strong> {app.monto}</p>
+            <p><strong>Estado:</strong> {app.status}</p>
+          </div>
+        ))
+      )}
     </div>
   );
 }
