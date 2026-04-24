@@ -30,14 +30,22 @@ const MontoYPlazoForm = ({ updateForm, plazo, monto, yearly, cuotaAprox, errors 
     updateForm({ yearly: yearlyUpdated });
   };
 
-  const handleValueChange = (plazoSelected: Plazo) => {
-    if (plazoSelected) {
-      setPlazoSelected(plazoSelected);
-      updateForm({
-        plazo: plazoSelected,
-        cuotaAprox: plazos.find(plazo => plazo.plazoMeses === Number(plazoSelected))?.cuota
-      });
-    }
+  // 🔥 FIX REAL AQUÍ
+  const handleValueChange = (value: string) => {
+    if (!value) return;
+
+    const plazoNumber = Number(value) as Plazo;
+
+    setPlazoSelected(plazoNumber);
+
+    const selectedPlan = plazos.find(
+      (p) => p.plazoMeses === plazoNumber
+    );
+
+    updateForm({
+      plazo: plazoNumber,
+      cuotaAprox: selectedPlan?.cuota || 0,
+    });
   };
 
   return (
@@ -87,7 +95,7 @@ const MontoYPlazoForm = ({ updateForm, plazo, monto, yearly, cuotaAprox, errors 
         </div>
         <ToggleGroup.Root
           type="single"
-          value={plazoSelected}
+          value={String(plazoSelected)}
           onValueChange={handleValueChange}
           className="flex flex-col gap-3 md:flex-row md:justify-between"
         >
