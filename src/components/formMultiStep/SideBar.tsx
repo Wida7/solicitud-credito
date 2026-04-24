@@ -1,8 +1,12 @@
 import { RoughNotation } from "react-rough-notation";
+import { canGoNext, validateStep1, validateStep2, validateStep3 } from "@/app/application-process/validationSteps";
+import { FormItems } from "@/modules/application/domain/types/form.types";
+
 
 type NavProps = {
   currentStepIndex: number;
   goTo: (index: number) => void;
+  formData: FormItems;
 };
 
 const styles = { 
@@ -10,7 +14,7 @@ const styles = {
   currentRough: "#09344a" 
 }
 
-const SideBar = ({ currentStepIndex, goTo }: NavProps) => {
+const SideBar = ({ currentStepIndex, goTo, formData }: NavProps) => {
   return (
     <div className="absolute -top-20 left-0 w-full md:w-[25%] md:relative md:top-0 md:left-0">
       <nav className="py-5 text-slate-200 bg-slate-100 h-full rounded-md border border-neutral-700 md:p-5">
@@ -41,7 +45,7 @@ const SideBar = ({ currentStepIndex, goTo }: NavProps) => {
             </span>
             <button
               tabIndex={0}
-              onClick={() => goTo(1)}
+              onClick={() => { (validateStep1(formData)) && goTo(1); }}
               className={`text-sm ${
                 currentStepIndex === 1 ? styles.currentStep : "text-primary"
               } md:text-base cursor-pointer hover:opacity-50`}
@@ -61,7 +65,7 @@ const SideBar = ({ currentStepIndex, goTo }: NavProps) => {
             </span>
             <button
               tabIndex={0}
-              onClick={() => goTo(2)}
+              onClick={() => { (validateStep1(formData)) && validateStep2(formData) && goTo(2); }}
               className={`text-sm ${
                 currentStepIndex === 2 ? styles.currentStep : "text-primary"
               } md:text-base cursor-pointer hover:opacity-50`}
@@ -81,7 +85,7 @@ const SideBar = ({ currentStepIndex, goTo }: NavProps) => {
             </span>
             <button
               tabIndex={0}
-              onClick={() => goTo(3)}
+              onClick={() => { (validateStep1(formData)) && validateStep2(formData) && validateStep3(formData) && goTo(3); }}
               className={`text-sm ${
                 currentStepIndex === 3 ? styles.currentStep : "text-primary"
               } md:text-base cursor-pointer hover:opacity-50`}

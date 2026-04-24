@@ -1,11 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import FormWrapper from "./FormWrapper";
-import { FormItems } from "@/app/application-process/page";
+import { FormItems } from "@/modules/application/domain/types/form.types";
 import { Input } from "@/components/ui/input";
 import { formatCurrency } from "@/lib/utils/formatCurrency";
 import { creditSimulator } from "@/modules/application/services/creditSimulator";
@@ -19,9 +19,9 @@ type Plazo = 0 | 1 | 3 | 5 | 6 | 9;
 
 const MontoYPlazoForm = ({ updateForm, plazo, monto, yearly, cuotaAprox, errors }: stepProps) => {
   const [yearlyUpdated, setYearlyUpdated] = useState(yearly);
-  const [planSelected, setPlanSelected] = useState<Plazo>(plazo);
+  const [plazoSelected, setPlazoSelected] = useState<Plazo>(plazo);
 
-  const planes = useMemo(() => {
+  const plazos = useMemo(() => {
     return creditSimulator(monto, yearly);
   }, [monto, yearly]);
 
@@ -32,15 +32,13 @@ const MontoYPlazoForm = ({ updateForm, plazo, monto, yearly, cuotaAprox, errors 
 
   const handleValueChange = (plazoSelected: Plazo) => {
     if (plazoSelected) {
-      setPlanSelected(plazoSelected);
-      const selectedPlan = planes.find(plan => plan.plazoMeses === plazoSelected);
-      updateForm({ 
+      setPlazoSelected(plazoSelected);
+      updateForm({
         plazo: plazoSelected,
-        cuotaAprox: selectedPlan?.cuota || 0
+        cuotaAprox: plazos.find(plazo => plazo.plazoMeses === Number(plazoSelected))?.cuota
       });
     }
   };
-
 
   return (
     <FormWrapper
@@ -89,25 +87,25 @@ const MontoYPlazoForm = ({ updateForm, plazo, monto, yearly, cuotaAprox, errors 
         </div>
         <ToggleGroup.Root
           type="single"
-          value={planSelected}
+          value={plazoSelected}
           onValueChange={handleValueChange}
           className="flex flex-col gap-3 md:flex-row md:justify-between"
         >
-          {planes.map((plan) => (
+          {plazos.map((plazo) => (
             <ToggleGroup.Item
-              key={plan.plazoMeses}
-              value={plan.plazoMeses}
-              className="border border-blue-800 p-3 h-24 rounded-md data-[state=on]:border-blue-500 data-[state=on]:bg-neutral-900 cursor-pointer hover:opacity-50"
+              key={plazo.plazoMeses}
+              value={String(plazo.plazoMeses)}
+              className="border border-blue-800 p-3 h-fit rounded-md data-[state=on]:border-blue-500 data-[state=on]:bg-neutral-900 cursor-pointer hover:opacity-50"
             >
               <div className="flex flex-col">
-                <p className="text-white font-semibold">{plan.label}</p>
+                <p className="text-white font-semibold">{plazo.label}</p>
 
                 <span className="text-[#b9e5ff] text-sm">
-                  {plan.descuentoTexto}
+                  {plazo.descuentoTexto}
                 </span>
 
                 <span className="text-[#b9e5ff] text-sm">
-                  Cuota: {formatCurrency(plan.cuota)}
+                  Cuota: {formatCurrency(plazo.cuota)}
                 </span>
               </div>
             </ToggleGroup.Item>

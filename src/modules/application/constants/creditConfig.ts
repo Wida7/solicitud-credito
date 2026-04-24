@@ -1,5 +1,5 @@
 export const CREDIT_CONFIG = {
-  tasaAnual: 0.12,
+  tasaAnual: 0.17,
 
   planesMensuales: [
     { plazoMeses: 3, descuento: 0.06, label: "3 meses" },

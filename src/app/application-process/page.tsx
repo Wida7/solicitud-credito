@@ -11,22 +11,9 @@ import FinalStep from "@/components/formMultiStep/FinalStep";
 import SuccessMessage from "@/components/formMultiStep/SuccessMessage";
 import SideBar from "@/components/formMultiStep/SideBar";
 import { formatCurrency } from "@/lib/utils/formatCurrency";
-
-
-export type FormItems = {
-  name: string;
-  email: string;
-  phone: string;
-  identificationType?: string;
-  identification: string;
-  monto: number;
-  plazo: 0 | 1 | 3 | 5 | 6 | 9;
-  cuotaAprox?: number;
-  ocupation: string;
-  ingresos: number;
-  egresos: number;
-  yearly: boolean;
-};
+import { FormItems } from "@/modules/application/domain/types/form.types";
+import { canGoNext } from "./validationSteps";
+import { toast } from "sonner";
 
 const initialValues: FormItems = {
   name: "",
@@ -35,8 +22,9 @@ const initialValues: FormItems = {
   identificationType: "",
   identification: "",
   monto: 0,
-  plazo: 3,
-  ocupation: "",
+  plazo: 0,
+  cuotaAprox: 0,
+  occupation: "",
   ingresos: 0,
   egresos: 0,
   yearly: false,
@@ -56,9 +44,23 @@ export default function Home() {
     showSuccessMsg,
   } = useMultiplestepForm(4);
 
-  function updateForm(fieldToUpdate: Partial<FormItems>) {
-    const { name, email, phone } = fieldToUpdate;
+  const handleNext = () => {
+    //console.log("Validando paso", currentStepIndex);
+    if (!canGoNext(currentStepIndex, formData)) {
+        toast.warning("Revisa los datos ingresados", {
+          description: "No puedes avanzar al siguiente paso, revisa los datos ingresados",
+          position: "top-center",
+        })
+      return; // bloquea avance
+    }
 
+    nextStep();
+  };
+  
+
+  function updateForm(fieldToUpdate: Partial<FormItems>) {
+    const { name, email, phone, monto, ingresos, egresos, occupation } = fieldToUpdate;
+    console.log("Validando campo:", fieldToUpdate);
     const constansValidation = {
       name: {
         minLength: 3,
@@ -132,7 +134,7 @@ export default function Home() {
     if (Object.values(errors).some((error) => error)) {
       return;
     }
-    nextStep();
+    handleNext();
   };
 
   return (
@@ -142,7 +144,7 @@ export default function Home() {
       } w-11/12 max-w-4xl relative m-1 rounded-lg border border-slate-800 bg-slate-700 p-4`}
     >
       {!showSuccessMsg ? (
-        <SideBar currentStepIndex={currentStepIndex} goTo={goTo} />
+        <SideBar currentStepIndex={currentStepIndex} goTo={goTo} formData={formData} />
       ) : (
         ""
       )}

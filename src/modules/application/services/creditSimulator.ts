@@ -2,11 +2,11 @@ import { CREDIT_CONFIG } from "../constants/creditConfig";
 import { calcularCuotaMensual } from "../utils/calcularCuotaMensual";
 
 export function creditSimulator(monto: number, yearly: boolean) {
-  const planes = yearly
+  const plazos = yearly
     ? CREDIT_CONFIG.planesAnuales
     : CREDIT_CONFIG.planesMensuales;
 
-  return planes.map((plan) => {
+  return plazos.map((plan) => {
     const cuota = calcularCuotaMensual({
       monto,
       plazoMeses: plan.plazoMeses,
