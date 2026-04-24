@@ -1,47 +1,47 @@
+"use client";
+
+import { useState } from "react";
 import { applicationApi } from "@/modules/application/services/applicationApi";
-import { maskEmail } from "@/lib/utils/mask";
+import { Button } from "@/components/ui/button";
 
-export const dynamic = "force-dynamic"; // evita cache
+export default function ReviewsPage() {
+  const [loading, setLoading] = useState(false);
+  const [dataTest, setDataTest] = useState(null);
 
-type ApplicationView = {
-  id: string;
-  name: string;
-  email: string;
-  monto: number;
-  status: string;
-};
+  const handleFetch = async () => {
+    try {
+      setLoading(true);
 
-export default async function ReviewsPage() {
-  const applications = await applicationApi.list();
+      const data = await applicationApi.list();
 
-  // 🔐 Transformación segura (DTO)
-  const safeData: ApplicationView[] = applications.map((app) => ({
-    id: app.id,
-    name: app.name,
-    email: maskEmail(app.email), // 🔥 protegido
-    monto: app.monto,
-    status: app.status,
-  }));
+      console.log("📦 RESULTADO:", data);
+      setDataTest(data);
+
+    } catch (error) {
+      console.error("❌ ERROR:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className="p-6">
-      <h1 className="text-xl font-bold mb-4">Solicitudes</h1>
+    <div className="p-6 space-y-4 flex flex-col items-center h-screen justify-center">
+      <h1 className="text-xl font-bold align-center">Admin Reviews</h1>
 
-      {safeData.length === 0 ? (
-        <p className="text-gray-400">No hay solicitudes aún</p>
-      ) : (
-        <div className="space-y-3">
-          {safeData.map((app) => (
-            <div
-              key={app.id}
-              className="border border-neutral-700 p-4 rounded-md bg-neutral-900"
-            >
-              <p><strong>Nombre:</strong> {app.name}</p>
-              <p><strong>Email:</strong> {app.email}</p>
-              <p><strong>Monto:</strong> ${app.monto.toLocaleString()}</p>
-              <p><strong>Estado:</strong> {app.status}</p>
-            </div>
-          ))}
+      <Button
+        onClick={handleFetch}
+        disabled={loading}
+        className="px-4 py-2 rounded-md bg-primary text-primary-foreground hover:opacity-90 disabled:opacity-50"
+      >
+        {loading ? "Consultando..." : "Consultar solicitudes"}
+      </Button>
+
+      {dataTest && (
+        <div className="mt-4">
+          <h2 className="text-lg font-semibold">Resultado:</h2>
+          <pre className="bg-muted p-4 rounded-md overflow-auto">
+            {JSON.stringify(dataTest, null, 2)}
+          </pre>
         </div>
       )}
     </div>

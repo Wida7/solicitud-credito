@@ -32,10 +32,10 @@ const DatosForm = ({
             placeholder="Escribe tú nombre"
             value={name}
             onChange={(e) => updateForm({ name: e.target.value })}
-            className="w-full placeholder:text-slate-600"
+            className="w-full"
             required
           />
-          {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+          {errors.name && <p className="text-sm text-destructive">{errors.name}</p>}
         </div>
         <div className="flex flex-col gap-2">
           <Label htmlFor="email">Correo electrónico</Label>
@@ -45,12 +45,12 @@ const DatosForm = ({
             id="email"
             placeholder="Escribe tú correo electrónico"
             value={email}
-            className="w-full placeholder:text-slate-600"
+            className="w-full"
             onChange={(e) => updateForm({ email: e.target.value })}
             required
           />
           {errors.email && (
-            <p className="text-red-500 text-sm">{errors.email}</p>
+            <p className="text-sm text-destructive">{errors.email}</p>
           )}
         </div>
         <div className="flex flex-col gap-2">
@@ -61,12 +61,12 @@ const DatosForm = ({
             id="phone"
             placeholder="Escribe tú número de teléfono"
             value={phone}
-            className="w-full placeholder:text-slate-600"
+            className="w-full"
             onChange={(e) => updateForm({ phone: e.target.value })}
             required
           />
           {errors.phone && (
-            <p className="text-red-500 text-sm">{errors.phone}</p>
+            <p className="text-sm text-destructive">{errors.phone}</p>
           )}
         </div>
         <div className="flex flex-col gap-2">
@@ -77,12 +77,12 @@ const DatosForm = ({
             id="identification"
             placeholder="Escribe tú número de identificación"
             value={identification}
-            className="w-full placeholder:text-slate-600"
+            className="w-full"
             onChange={(e) => updateForm({ identification: e.target.value })}
             required
           />
           {errors.identification && (
-            <p className="text-red-500 text-sm">{errors.identification}</p>
+            <p className="text-sm text-destructive">{errors.identification}</p>
           )}
         </div>        
       </div>

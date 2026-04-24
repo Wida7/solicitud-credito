@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -17,7 +17,7 @@ type stepProps = FormItems & {
 
 type Plazo = 0 | 1 | 3 | 5 | 6 | 9;
 
-const MontoYPlazoForm = ({ updateForm, plazo, monto, yearly, cuotaAprox, errors }: stepProps) => {
+const MontoYPlazoForm = ({ updateForm, plazo, monto, yearly, errors }: stepProps) => {
   const [yearlyUpdated, setYearlyUpdated] = useState(yearly);
   const [plazoSelected, setPlazoSelected] = useState<Plazo>(plazo);
 
@@ -30,7 +30,6 @@ const MontoYPlazoForm = ({ updateForm, plazo, monto, yearly, cuotaAprox, errors 
     updateForm({ yearly: yearlyUpdated });
   };
 
-  // 🔥 FIX REAL AQUÍ
   const handleValueChange = (value: string) => {
     if (!value) return;
 
@@ -53,8 +52,8 @@ const MontoYPlazoForm = ({ updateForm, plazo, monto, yearly, cuotaAprox, errors 
       title="Monto y plazos"
       description="Indica tu monto solicitado y el plazo en el que deseas pagar"
     >
-      <div className="w-full items-center justify-center bg-slate-800 p-3 rounded-md">
-        <Label className="text-slate-300" htmlFor="monto">Monto solicitado: ${monto.toLocaleString()}</Label>
+      <div className="form-panel w-full items-center justify-center p-4">
+        <Label className="text-foreground" htmlFor="monto">Monto solicitado: ${monto.toLocaleString()}</Label>
         <Input
           autoFocus
           inputMode="numeric"
@@ -66,29 +65,28 @@ const MontoYPlazoForm = ({ updateForm, plazo, monto, yearly, cuotaAprox, errors 
             const raw = e.target.value.replace(/\D/g, "");
             updateForm({ monto: raw === "" ? 0 : Number(raw) });
           }}
-          className="w-full placeholder:text-slate-600 my-2"
+          className="my-2 w-full"
           required
         />
-        {errors.monto && <p className="text-red-500 text-sm">{errors.monto}</p>}
+        {errors.monto && <p className="text-sm text-destructive">{errors.monto}</p>}
       </div>
 
-      <div className="w-full items-center justify-center bg-slate-800 p-3 rounded-md">
+      <div className="form-panel w-full items-center justify-center p-4">
         <div className="flex items-center gap-6 w-full justify-center mb-4">
           <Label
             htmlFor="airplane-mode"
-            className={yearly ? "text-blue-800" : "text-blue-500 scale-120"}
+            className={yearly ? "text-muted-foreground" : "scale-120 text-primary"}
           >
             Mensual
           </Label>
           <Switch
             id="airplane-mode"
-            className="data-[state=checked]:bg-blue-900 data-[state=unchecked]:bg-blue-900 border-slate-600"
             checked={yearlyUpdated}
             onCheckedChange={handleCheckedChange}
           />
           <Label
             htmlFor="airplane-mode"
-            className={yearly ? "text-blue-500 scale-120" : "text-blue-800"}
+            className={yearly ? "scale-120 text-primary" : "text-muted-foreground"}
           >
             Anual
           </Label>
@@ -103,16 +101,16 @@ const MontoYPlazoForm = ({ updateForm, plazo, monto, yearly, cuotaAprox, errors 
             <ToggleGroup.Item
               key={plazo.plazoMeses}
               value={String(plazo.plazoMeses)}
-              className="border border-blue-800 p-3 h-fit rounded-md data-[state=on]:border-blue-500 data-[state=on]:bg-neutral-900 cursor-pointer hover:opacity-50"
+              className="h-fit cursor-pointer rounded-2xl border border-form-panel-border bg-surface p-4 text-left transition-all hover:border-primary/45 hover:bg-primary/4 data-[state=on]:border-primary data-[state=on]:bg-primary/7 data-[state=on]:shadow-sm"
             >
               <div className="flex flex-col">
-                <p className="text-white font-semibold">{plazo.label}</p>
+                <p className="font-semibold text-foreground">{plazo.label}</p>
 
-                <span className="text-[#b9e5ff] text-sm">
+                <span className="text-sm text-secondary">
                   {plazo.descuentoTexto}
                 </span>
 
-                <span className="text-[#b9e5ff] text-sm">
+                <span className="text-sm text-muted-foreground">
                   Cuota: {formatCurrency(plazo.cuota)}
                 </span>
               </div>

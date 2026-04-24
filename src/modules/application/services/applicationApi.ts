@@ -1,23 +1,19 @@
 import { Application } from "../store/types";
 
-let mockDB: Application[] = [];
+const mockDB: Application[] = [];
 
 export const applicationApi = {
-  create: async (data: Application) => {
-    mockDB.push(data);
-    return data;
+  create: async (data: any) => {
+    const res = await fetch("/api/applications", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+
+    return res.json();
   },
 
   list: async () => {
-    return mockDB;
-  },
-
-  simulate: async (id: string) => {
-    const rand = Math.random();
-
-    if (rand < 0.6) return { status: "APPROVED" };
-    if (rand < 0.85) return { status: "REJECTED" };
-
-    throw new Error("Error técnico");
+    const res = await fetch("/api/applications");
+    return res.json();
   },
 };

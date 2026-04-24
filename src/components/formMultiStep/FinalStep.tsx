@@ -1,8 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import FormWrapper from "./FormWrapper";
-import { Separator } from "@/components/ui/separator";
 import { FormItems } from "@/modules/application/domain/types/form.types";
 import { formatCurrency } from "@/lib/utils/formatCurrency";
 import Image from "next/image";
@@ -22,15 +20,15 @@ const FinalStep = ({ yearly, plazo, monto, cuotaAprox, goTo }: StepProps) => {
       description="Revisa tu información antes de enviar tu solicitud"
     >
       <div className="">
-        <div className="bg-neutral-900 p-4 mt-2 rounded-md border border-neutral-700">
+        <div className="form-panel mt-2 p-4">
           <div className="flex justify-between items-center">
             <div className="">
-              <h4 className="font-semibold text-white md:text-lg">
+              <h4 className="font-semibold text-foreground md:text-lg">
                 {`Monto: ${formatCurrency(monto)}`}
               </h4>
               <button
                 onClick={() => goTo(0)}
-                className="text-[#6fe79f] text-sm"
+                className="text-sm text-secondary transition-opacity hover:opacity-80"
               >
                 Cambiar monto
               </button>
@@ -39,12 +37,12 @@ const FinalStep = ({ yearly, plazo, monto, cuotaAprox, goTo }: StepProps) => {
           </div>
           <div className="flex justify-between items-center">
             <div className="">
-              <h4 className="font-semibold text-white md:text-lg">
-                {`Plazo: ${plazo} ${plazoNumber === 1 ? "mes" : "meses"}${yearly ? " (anual)" : ""}`}
+              <h4 className="font-semibold text-foreground md:text-lg">
+                {`Plazo: ${plazo} ${plazoNumber === 1 ? "mes" : "meses"}`}
               </h4>
               <button
                 onClick={() => goTo(0)}
-                className="text-[#6fe79f] text-sm"
+                className="text-sm text-secondary transition-opacity hover:opacity-80"
               >
                 Cambiar plazo
               </button>
@@ -56,8 +54,8 @@ const FinalStep = ({ yearly, plazo, monto, cuotaAprox, goTo }: StepProps) => {
               className="flex justify-between items-center my-2"
               key="cuotaAprox"
             >
-              <p className="text-neutral-400">Valor cuota aproximada:</p>
-              <p className="">{formatCurrency(cuotaAprox ?? 0)}</p>
+              <p className="text-muted-foreground">Valor cuota aproximada:</p>
+              <p className="font-semibold text-foreground">{formatCurrency(cuotaAprox ?? 0)}</p>
             </div>
         </div>
 

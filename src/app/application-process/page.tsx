@@ -12,10 +12,11 @@ import SuccessMessage from "@/components/formMultiStep/SuccessMessage";
 import SideBar from "@/components/formMultiStep/SideBar";
 import { formatCurrency } from "@/lib/utils/formatCurrency";
 import { FormItems } from "@/modules/application/domain/types/form.types";
+import { useAppDispatch } from "@/infrastructure/store/hooks";
 import { canGoNext } from "./validationSteps";
 import { toast } from "sonner";
-import { useDispatch } from "react-redux";
 import { createApplication } from "@/modules/application/store/applicationThunks";
+import { applicationApi } from "@/modules/application/services/applicationApi";
 
 
 const initialValues: FormItems = {
@@ -42,11 +43,10 @@ export default function Home() {
     currentStepIndex,
     isFirstStep,
     isLastStep,
-    steps,
     goTo,
     showSuccessMsg,
   } = useMultiplestepForm(4);
-  const dispatch = useDispatch<any>();
+  const dispatch = useAppDispatch();
 
   const handleNext = async () => {
     //console.log("Validando paso", currentStepIndex);
@@ -60,19 +60,21 @@ export default function Home() {
 
     if (isLastStep) {
       try {
-
+        await applicationApi.create(formData);
         await dispatch(createApplication(formData)).unwrap();
         toast.success("Solicitud enviada correctamente", {
           position: "top-center",
-          className: "bg-black text-white font-semibold",
+          className: "bg-primary text-primary-foreground font-semibold",
         });
         nextStep();
 
-      } catch (error: any) {
+      } catch (error: unknown) {
+        const errorMessage =
+          error instanceof Error ? error.message : "Intenta nuevamente";
 
         console.error(error);
         toast.error("Error al enviar la solicitud", {
-          description: error?.message || "Intenta nuevamente",
+          description: errorMessage,
         });
       }
       return;
@@ -83,7 +85,7 @@ export default function Home() {
 
 
   function updateForm(fieldToUpdate: Partial<FormItems>) {
-    const { name, email, phone, monto, ingresos, egresos, occupation } = fieldToUpdate;
+    const { name, email, phone } = fieldToUpdate;
     console.log("Validando campo:", fieldToUpdate);
     const constansValidation = {
       name: {
@@ -163,7 +165,7 @@ export default function Home() {
   return (
     <div
       className={`flex justify-between ${currentStepIndex === 1 ? "h-150 md:h-125" : "h-125"
-        } w-11/12 max-w-4xl relative m-1 rounded-lg border border-slate-800 bg-slate-700 p-4`}
+        } relative m-1 w-11/12 max-w-4xl rounded-[28px] border border-form-panel-border bg-form-panel p-4 text-foreground shadow-lg`}
     >
       {!showSuccessMsg ? (
         <SideBar currentStepIndex={currentStepIndex} goTo={goTo} formData={formData} />
@@ -209,7 +211,7 @@ export default function Home() {
                   variant="ghost"
                   className={`${isFirstStep
                       ? "invisible"
-                      : "visible p-0 text-neutral-200 "
+                      : "visible p-0 text-muted-foreground hover:text-foreground"
                     } px-4`}
                 >
                   Anterior
@@ -220,7 +222,7 @@ export default function Home() {
                   <Button
                     type="submit"
                     variant="default"
-                    className="relative text-neutral-200  border-black/20 shadow-black/10 r hover:text-white"
+                    className="relative"
                   >
                     {isLastStep ? "Confirmar" : "Siguiente"}
                   </Button>

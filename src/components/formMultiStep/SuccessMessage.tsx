@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { motion } from "framer-motion";
 import { BadgeCheck, HandHeart } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -31,10 +30,10 @@ const SuccessMessage = () => {
     >
       <HandHeart height="100" width="100" className="text-primary hover:scale-110 hover:animate-pulse" />
 
-      <h4 className="text-2xl font-semibold text-white md:text-3xl">
+      <h4 className="text-2xl font-semibold text-foreground md:text-3xl">
         Gracias!
       </h4>
-      <p className="text-sm max-w-md text-neutral-300 md:text-base">
+      <p className="max-w-md text-sm text-muted-foreground md:text-base">
         Pronto recibirás una respuesta sobre tu solicitud. Confirmando que toda la información proporcionada es correcta para continuar con el proceso.
       </p>
       <div className="flex items-center mt-6">
