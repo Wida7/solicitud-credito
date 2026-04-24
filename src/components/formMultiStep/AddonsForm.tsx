@@ -12,13 +12,7 @@ type stepProps = FormItems & {
   updateForm: (fieldToUpdate: Partial<FormItems>) => void;
 };
 
-const AddonsForm = ({ addOns, yearly, ocupation, ingresos, egresos, updateForm }: stepProps) => {
-  function handleCheckboxChange(addOnId: number, checked: boolean) {
-    const updatedAddOns = addOns.map((addOn) =>
-      addOn.id === addOnId ? { ...addOn, checked } : addOn
-    );
-    updateForm({ addOns: updatedAddOns });
-  }
+const AddonsForm = ({ yearly, ocupation, ingresos, egresos, updateForm }: stepProps) => {
 
   const ocupationOptions = OCCUPATIONS.map((occupation) => ({
     label: occupation.label,
