@@ -87,7 +87,7 @@ const MontoYPlazoForm = ({ updateForm, plazo, monto, yearly, cuotaAprox, errors 
         </div>
         <ToggleGroup.Root
           type="single"
-          value={plazoSelected}
+          value={String(plazoSelected)}
           onValueChange={handleValueChange}
           className="flex flex-col gap-3 md:flex-row md:justify-between"
         >
