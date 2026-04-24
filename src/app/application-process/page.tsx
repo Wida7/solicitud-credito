@@ -14,6 +14,9 @@ import { formatCurrency } from "@/lib/utils/formatCurrency";
 import { FormItems } from "@/modules/application/domain/types/form.types";
 import { canGoNext } from "./validationSteps";
 import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import { createApplication } from "@/modules/application/store/applicationThunks";
+
 
 const initialValues: FormItems = {
   name: "",
@@ -43,20 +46,38 @@ export default function Home() {
     goTo,
     showSuccessMsg,
   } = useMultiplestepForm(4);
+  const dispatch = useDispatch<any>();
 
-  const handleNext = () => {
+  const handleNext = async () => {
     //console.log("Validando paso", currentStepIndex);
     if (!canGoNext(currentStepIndex, formData)) {
-        toast.warning("Revisa los datos ingresados", {
-          description: "No puedes avanzar al siguiente paso, revisa los datos ingresados",
-          position: "top-center",
-        })
+      toast.warning("Revisa los datos ingresados", {
+        description: "No puedes avanzar al siguiente paso, revisa los datos ingresados",
+        position: "top-center",
+      })
       return; // bloquea avance
+    }
+
+    if (isLastStep) {
+      try {
+
+        await dispatch(createApplication(formData)).unwrap();
+        toast.success("Solicitud enviada correctamente");
+        nextStep();
+
+      } catch (error: any) {
+
+        console.error(error);
+        toast.error("Error al enviar la solicitud", {
+          description: error?.message || "Intenta nuevamente",
+        });
+      }
+      return;
     }
 
     nextStep();
   };
-  
+
 
   function updateForm(fieldToUpdate: Partial<FormItems>) {
     const { name, email, phone, monto, ingresos, egresos, occupation } = fieldToUpdate;
@@ -111,7 +132,7 @@ export default function Home() {
         phone: "",
       }));
     }
-    
+
     //console.log(fieldToUpdate.monto, constansValidation.monto.min)
     if (fieldToUpdate.monto !== undefined && fieldToUpdate.monto < constansValidation.monto.min) {
       setErrors((prevState) => ({
@@ -125,8 +146,7 @@ export default function Home() {
       }));
     }
 
-
-    setFormData({ ...formData, ...fieldToUpdate });
+    setFormData(prev => ({ ...prev, ...fieldToUpdate }));
   }
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -139,9 +159,8 @@ export default function Home() {
 
   return (
     <div
-      className={`flex justify-between ${
-        currentStepIndex === 1 ? "h-150 md:h-125" : "h-125"
-      } w-11/12 max-w-4xl relative m-1 rounded-lg border border-slate-800 bg-slate-700 p-4`}
+      className={`flex justify-between ${currentStepIndex === 1 ? "h-150 md:h-125" : "h-125"
+        } w-11/12 max-w-4xl relative m-1 rounded-lg border border-slate-800 bg-slate-700 p-4`}
     >
       {!showSuccessMsg ? (
         <SideBar currentStepIndex={currentStepIndex} goTo={goTo} formData={formData} />
@@ -185,11 +204,10 @@ export default function Home() {
                   onClick={previousStep}
                   type="button"
                   variant="ghost"
-                  className={`${
-                    isFirstStep
+                  className={`${isFirstStep
                       ? "invisible"
                       : "visible p-0 text-neutral-200 "
-                  } px-4`}
+                    } px-4`}
                 >
                   Anterior
                 </Button>
@@ -201,7 +219,7 @@ export default function Home() {
                     variant="default"
                     className="relative text-neutral-200  border-black/20 shadow-black/10 r hover:text-white"
                   >
-                    {isLastStep ? "Confirm" : "Siguiente"}
+                    {isLastStep ? "Confirmar" : "Siguiente"}
                   </Button>
                 </div>
               </div>

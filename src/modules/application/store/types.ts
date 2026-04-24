@@ -9,8 +9,13 @@ export interface Application {
   id: string;
   name: string;
   email: string;
-  amount: number;
-  status: ApplicationStatus;
+  monto: number;
+  plazo: number;
+  cuota: number;
+  ingresos: number;
+  egresos: number;
+  occupation: string;
+  status: "DRAFT" | "SUBMITTED";
   createdAt: string;
 }
 

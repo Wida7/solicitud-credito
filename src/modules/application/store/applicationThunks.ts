@@ -1,10 +1,15 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { applicationApi } from "../services/applicationApi";
+import { FormItems } from "../domain/types/form.types";
+import { mapFormToApplication } from "../domain/mappers/application.mapper";
 
 export const createApplication = createAsyncThunk(
   "application/create",
-  async (data: any) => {
-    return await applicationApi.create(data);
+  async (data: FormItems) => {
+    const application = mapFormToApplication(data);
+
+    // aquí podrías llamar API después
+    return application;
   }
 );
 

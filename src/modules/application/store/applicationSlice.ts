@@ -5,6 +5,7 @@ import {
   simulateApplication,
 } from "./applicationThunks";
 import { Application } from "./types";
+import { FormItems } from "../domain/types/form.types";
 
 interface State {
   items: Application[];
@@ -16,6 +17,8 @@ const initialState: State = {
   items: [],
   loading: false,
 };
+
+
 
 const applicationSlice = createSlice({
   name: "application",

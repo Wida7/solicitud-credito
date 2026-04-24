@@ -3,18 +3,9 @@ import { Application } from "../store/types";
 let mockDB: Application[] = [];
 
 export const applicationApi = {
-  create: async (data: Partial<Application>) => {
-    const newApp: Application = {
-      id: crypto.randomUUID(),
-      name: data.name || "",
-      email: data.email || "",
-      amount: data.amount || 0,
-      status: "DRAFT",
-      createdAt: new Date().toISOString(),
-    };
-
-    mockDB.push(newApp);
-    return newApp;
+  create: async (data: Application) => {
+    mockDB.push(data);
+    return data;
   },
 
   list: async () => {

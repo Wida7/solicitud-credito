@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "type-check": "tsc --noEmit",
+    "build:strict": "npm run type-check && next build"
   },
   "dependencies": {
     "@hugeicons/core-free-icons": "^4.1.1",
