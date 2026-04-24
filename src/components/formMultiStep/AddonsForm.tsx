@@ -1,4 +1,4 @@
-import { FormItems } from "@/app/application-process/page";
+import { FormItems } from "@/modules/application/domain/types/form.types";
 //import { Checkbox } from "@/components/ui/checkbox";
 import FormWrapper from "./FormWrapper";
 import {
@@ -12,9 +12,9 @@ type stepProps = FormItems & {
   updateForm: (fieldToUpdate: Partial<FormItems>) => void;
 };
 
-const AddonsForm = ({ yearly, ocupation, ingresos, egresos, updateForm }: stepProps) => {
+const AddonsForm = ({ yearly, occupation, ingresos, egresos, updateForm }: stepProps) => {
 
-  const ocupationOptions = OCCUPATIONS.map((occupation) => ({
+  const occupationOptions = OCCUPATIONS.map((occupation) => ({
     label: occupation.label,
     value: occupation.value,
   }));
@@ -26,18 +26,19 @@ const AddonsForm = ({ yearly, ocupation, ingresos, egresos, updateForm }: stepPr
     >
       <div className="flex flex-col gap-3">
         <Label htmlFor="ocupation">Ocupación</Label>
-        <Select>
+        <Select
+          value={occupation}
+          onValueChange={(value) => {
+            updateForm({ occupation: value });
+          }}
+        >
           <SelectTrigger className="w-45">
             <SelectValue placeholder="Indique su ocupación" />
           </SelectTrigger>
           <SelectContent position="popper">
             <SelectGroup>
-              {ocupationOptions.map((option) => (
-                <SelectItem
-                  key={option.value}
-                  value={option.value}
-                  onSelect={() => updateForm({ ocupation: option.value })}
-                >
+              {occupationOptions.map((option) => (
+                <SelectItem key={option.value} value={option.value}>
                   {option.label}
                 </SelectItem>
               ))}

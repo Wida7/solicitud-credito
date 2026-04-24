@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import FormWrapper from "./FormWrapper";
 import { Separator } from "@/components/ui/separator";
-import { FormItems } from "@/app/application-process/page";
+import { FormItems } from "@/modules/application/domain/types/form.types";
 import { formatCurrency } from "@/lib/utils/formatCurrency";
 import Image from "next/image";
 import prestamo from "../../../public/assets/prestamo.png";
@@ -14,7 +14,7 @@ type StepProps = FormItems & {
 };
 
 const FinalStep = ({ yearly, plazo, monto, cuotaAprox, goTo }: StepProps) => {
-
+  const plazoNumber = Number(plazo);
 
   return (
     <FormWrapper
@@ -40,7 +40,7 @@ const FinalStep = ({ yearly, plazo, monto, cuotaAprox, goTo }: StepProps) => {
           <div className="flex justify-between items-center">
             <div className="">
               <h4 className="font-semibold text-white md:text-lg">
-                {`Plazo: ${plazo} ${plazo === 1 ? "mes" : "meses"}${yearly ? " (anual)" : ""}`}
+                {`Plazo: ${plazo} ${plazoNumber === 1 ? "mes" : "meses"}${yearly ? " (anual)" : ""}`}
               </h4>
               <button
                 onClick={() => goTo(0)}

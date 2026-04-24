@@ -7,7 +7,7 @@ export type FormItems = {
   monto: number;
   plazo: 0 | 1 | 3 | 5 | 6 | 9;
   cuotaAprox?: number;
-  ocupation: string;
+  occupation: string;
   ingresos: number;
   egresos: number;
   yearly: boolean;
