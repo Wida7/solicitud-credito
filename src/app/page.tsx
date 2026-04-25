@@ -5,9 +5,9 @@ export default function Home() {
 
   //Enrutador automático basado en permisos (obviamente en el mundo real se validaía también en la vista)
   if (permisos) {
-    redirect("/landing-page");
+    redirect("/view/landing-page");
   } else {
-    redirect("/admin/reviews");
+    redirect("/view/admin/reviews");
   }
 
   return;

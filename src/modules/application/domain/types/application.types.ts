@@ -1,12 +1,16 @@
 export interface Application {
-    id: string;
     name: string;
-    phone?: string;
+    identification: string;
     email: string;
+    /* phone: string; */
     monto: number;
     plazo: number;
+    cuota?: number;
+    cuotaAprox?: number;
+    /* occupation: string;
+    ingresos: number;
+    egresos: number; */
     status: "DRAFT" | "APPROVED" | "REJECTED";
-    createdAt: string;
 }
 
 export type CreateApplicationInput = {
@@ -16,12 +20,11 @@ export type CreateApplicationInput = {
     phone: string;
     monto: number;
     plazo: number;
+    cuota?: number;
     cuotaAprox?: number;
     occupation: string;
     ingresos: number;
     egresos: number;
     status: "DRAFT" | "APPROVED" | "REJECTED";
     createdAt: string;
-    cuota?: number;
-    yearly?: boolean;
 };

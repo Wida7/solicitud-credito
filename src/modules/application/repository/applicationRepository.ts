@@ -22,7 +22,7 @@ export const applicationRepository = {
 
 			const document = {
 				...data,
-				createdAt: new Date().toLocaleString("es-CO")
+				createdAt: new Date().toString
 			};
 
 			const result = await db

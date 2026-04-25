@@ -1,5 +1,5 @@
 import { RoughNotation } from "react-rough-notation";
-import { validateStep1, validateStep2, validateStep3 } from "@/app/application-process/validationSteps";
+import { validateStep1, validateStep2, validateStep3 } from "@/app/view/application-process/validationSteps";
 import { FormItems } from "@/modules/application/domain/types/form.types";
 
 

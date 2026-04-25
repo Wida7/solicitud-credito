@@ -8,7 +8,7 @@ export interface MongoApplication {
   monto: number;
   plazo: number;
   status: "DRAFT" | "APPROVED" | "REJECTED";
-  createdAt: string;
+  /* createdAt: string; */
 }
 
 export type MongoAbandonApplication = {
