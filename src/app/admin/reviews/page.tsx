@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { applicationApi } from "@/modules/application/services/applicationApi";
 import { Button } from "@/components/ui/button";
+import { Application } from "@/modules/application/domain/types/application.types";
 
 export default function ReviewsPage() {
   const [loading, setLoading] = useState(false);
-  const [dataTest, setDataTest] = useState(null);
+const [dataTest, setDataTest] = useState<Application[] | null>(null);
 
   const handleFetch = async () => {
     try {

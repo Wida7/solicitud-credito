@@ -15,44 +15,45 @@ export const applicationRepository = {
 	},
 
 	//Crear una nueva solicitud de crédito
-	async create(data: Application): Promise<Application> {
+	async create(data: Omit<Application, "id" >): Promise<Application> {
 		return tryCatchWrapper(async () => {
 			const client = await clientPromise;
 			const db = client.db(database);
 
-			// Mongo usa _id, no guardamos id
-			const { id, ...mongoData } = data;
+			const document = {
+				...data,
+				createdAt: new Date().toLocaleString("es-CO")
+			};
 
 			const result = await db
 				.collection<Omit<MongoApplication, "_id">>(collection)
-				.insertOne(mongoData);
+				.insertOne(document);
 
 			return {
-				...data,
-				// 🔥 mapper Mongo → dominio
-				id: result.insertedId.toString(),
+				...document,
+				id: result.insertedId.toString(), 
 			};
 		});
 	},
 
 	// Listar todas las solicitudes de crédito
 	async findAll(): Promise<Application[]> {
-  return tryCatchWrapper(async () => {
-    const client = await clientPromise;
-    const db = client.db(database);
+		return tryCatchWrapper(async () => {
+			const client = await clientPromise;
+			const db = client.db(database);
 
-    const data = await db.collection(collection).find().toArray();
+			const data = await db.collection(collection).find().toArray();
 
-    return data.map((doc) => ({
-      id: doc._id.toString(),
-      name: doc.name,
-			identification: doc.identification,
-      email: doc.email,
-      monto: doc.monto,
-      plazo: doc.plazo,
-      status: doc.status,
-      createdAt: doc.createdAt,
-    }));
-  });
-},
+			return data.map((doc) => ({
+				id: doc._id.toString(),
+				name: doc.name,
+				identification: doc.identification,
+				email: doc.email,
+				monto: doc.monto,
+				plazo: doc.plazo,
+				status: doc.status,
+				createdAt: doc.createdAt,
+			}));
+		});
+	},
 };

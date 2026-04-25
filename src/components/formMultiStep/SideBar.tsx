@@ -40,7 +40,7 @@ const SideBar = ({ currentStepIndex, goTo, formData }: NavProps) => {
   };
 
   return (
-    <div className="absolute -top-20 left-0 w-full md:w-[25%] md:relative md:top-0 md:left-0">
+    <div className="relative w-full md:w-[25%] md:top-0 md:left-0">
       <nav className="h-full rounded-3xl border border-form-panel-border bg-surface px-4 py-5 text-foreground shadow-sm md:p-5">
         <ul className="flex justify-center gap-6 md:flex-col">
           <li className="flex flex-col items-start font-medium">

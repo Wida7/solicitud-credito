@@ -8,14 +8,16 @@ export type ApplicationStatus =
 export interface Application {
   id: string;
   name: string;
+  identification?: string;
   email: string;
+  phone?: string;
   monto: number;
   plazo: number;
-  cuota: number;
-  ingresos: number;
-  egresos: number;
-  occupation: string;
-  status: "DRAFT" | "SUBMITTED";
+  cuota?: number;
+  ingresos?: number;
+  egresos?: number;
+  occupation?: string;
+  status: "DRAFT" | "APPROVED" | "REJECTED";
   createdAt: string;
 }
 

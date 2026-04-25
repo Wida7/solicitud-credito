@@ -11,7 +11,7 @@ type StepProps = FormItems & {
   goTo: (index: number) => void;
 };
 
-const FinalStep = ({ yearly, plazo, monto, cuotaAprox, goTo }: StepProps) => {
+const FinalStep = ({ plazo, monto, cuotaAprox, goTo }: StepProps) => {
   const plazoNumber = Number(plazo);
 
   return (

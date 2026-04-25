@@ -19,10 +19,3 @@ export const fetchApplications = createAsyncThunk(
     return await applicationApi.list();
   }
 );
-
-export const simulateApplication = createAsyncThunk(
-  "application/simulate",
-  async (id: string) => {
-    return await applicationApi.simulate(id);
-  }
-);

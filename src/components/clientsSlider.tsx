@@ -1,4 +1,5 @@
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
+import Image from "next/image";
 
 function InfiniteSliderBasic() {
 
@@ -16,13 +17,14 @@ function InfiniteSliderBasic() {
   return (
     <InfiniteSlider gap={100} reverse className="w-full h-full bg-white flex min-w-full justify-around">
       {LOOP.map((logo, i) => (
-        <img
-          key={i}
-          src={logo.src}
-          alt={logo.alt}
-          className="h-30 w-auto"
-          decoding="async"
-          loading="lazy"
+        <Image
+        key={i}
+        src={logo.src}
+        alt={logo.alt}
+        width={120}
+        height={120}
+        className="size-30"
+        unoptimized
         />
       ))}
     </InfiniteSlider>
