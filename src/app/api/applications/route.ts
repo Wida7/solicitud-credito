@@ -1,4 +1,5 @@
 import { applicationRepository } from "@/modules/application/repository/applicationRepository";
+import { CreateApplicationInput } from "@/modules/application/domain/types/application.types";
 
 export async function GET() {
   try {
@@ -19,7 +20,7 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
 
-    const body = await req.json();
+    const body = (await req.json()) as CreateApplicationInput;
     const created = await applicationRepository.create(body);
     return Response.json(created, { status: 201 });
 

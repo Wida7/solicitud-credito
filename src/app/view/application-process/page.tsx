@@ -67,16 +67,17 @@ export default function Home() {
       email: formData.email,
       monto: formData.monto,
       plazo: formData.plazo,
+      identificationType: formData.identificationType,
       identification: formData.identification,
       phone: formData.phone,
       cuotaAprox: formData.cuotaAprox,
       occupation: formData.occupation,
       ingresos: formData.ingresos,
       egresos: formData.egresos,
+      yearly: formData.yearly,
 
       //campos que NO vienen del form
       status: "DRAFT",
-      createdAt: ""
     };
 
 

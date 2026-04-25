@@ -1,10 +1,1 @@
-import { FormItems } from "./form.types";
-
-export type AbandonApplication = {
-	id: string;
-  rating: string;
-  message: string;
-  createdAt: string;
-	stepAbandon?: number;
-  formSnapshot: Partial<FormItems>;
-};
+export type { AbandonApplication } from "@/modules/abandon/domain/types/abandon.types";

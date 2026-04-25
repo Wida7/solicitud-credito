@@ -1,4 +1,5 @@
 import { abandonRepository } from "@/modules/abandon/repository/abandonRepository";
+import { AbandonApplication } from "@/modules/abandon/domain/types/abandon.types";
 
 export async function GET() {
   try {
@@ -19,7 +20,7 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
 
-    const body = await req.json();
+    const body = (await req.json()) as Omit<AbandonApplication, "id" | "createdAt">;
     const created = await abandonRepository.create(body);
     return Response.json(created, { status: 201 });
 
