@@ -47,6 +47,17 @@ export async function PATCH(
   req: NextRequest,
   context: { params: Promise<{ id: string }> }
 ) {
+
+  // SIMULACIÓN DE ERROR PARA TESTING
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+  if (Math.random() < 0.5) {
+    console.log("SIMULANDO ERROR 500 (Optimistic Test)");
+    return new Response(
+      JSON.stringify({ message: "Error simulado para probar el rollback del front" }),
+      { status: 500 }
+    );
+  }
+
   try {
     const { error } = requireEmployeeAuth(req);
 
