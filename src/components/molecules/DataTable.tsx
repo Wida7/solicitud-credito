@@ -200,7 +200,7 @@ const DataTable = <TData,>({ data, columns }: DataTableProps<TData>) => {
 						) : (
 							<TableRow>
 								<TableCell colSpan={columns.length} className='h-24 text-center'>
-									No results.
+									Sin resultados
 								</TableCell>
 							</TableRow>
 						)}
