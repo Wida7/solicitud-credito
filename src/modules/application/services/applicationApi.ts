@@ -15,6 +15,7 @@ const getErrorMessage = async (res: Response, fallbackMessage: string) => {
 
 export const applicationApi = {
   create: async (data: CreateApplicationInput): Promise<Application> => {
+    console.log("[applicationApi.create] Iniciando petición a /api/applications con data:", data);
     const res = await fetch("/api/applications", {
       method: "POST",
       headers: {
@@ -23,11 +24,17 @@ export const applicationApi = {
       body: JSON.stringify(data),
     });
 
+    console.log(`[applicationApi.create] Respuesta HTTP recibida con status: ${res.status} ${res.statusText}`);
+
     if (!res.ok) {
-      throw new Error("Error creando solicitud");
+      const errorText = await res.text();
+      console.error("[applicationApi.create] Fetch falló:", res.status, errorText);
+      throw new Error(`Error creando solicitud: ${res.status} - ${errorText}`);
     }
 
-    return res.json();
+    const responseData = await res.json();
+    console.log("[applicationApi.create] Petición exitosa, parseada a JSON:", responseData);
+    return responseData;
   },
 
   list: async (): Promise<Application[]> => {

@@ -16,9 +16,12 @@ export const applicationRepository = {
   },
 
   async create(data: CreateApplicationInput): Promise<Application> {
+    applicationRepository.logger(`Iniciando creación con datos: ${JSON.stringify(data)}`);
     return tryCatchWrapper(async () => {
+      applicationRepository.logger("Obteniendo conexión a MongoDB (clientPromise)...");
       const client = await clientPromise;
       const db = client.db(database);
+      applicationRepository.logger(`Conectado a la BD: ${database}, colección: ${collection}`);
 
       const document: Omit<MongoApplication, "_id"> = {
         ...data,
@@ -26,9 +29,12 @@ export const applicationRepository = {
         createdAt: new Date().toISOString(),
       };
 
+      applicationRepository.logger("Ejecutando db.collection.insertOne...");
       const result = await db
         .collection<Omit<MongoApplication, "_id">>(collection)
         .insertOne(document);
+
+      applicationRepository.logger(`Inserción en MongoDB exitosa. Nuevo ID: ${result.insertedId.toString()}`);
 
       return {
         ...document,

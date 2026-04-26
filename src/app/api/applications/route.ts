@@ -29,9 +29,10 @@ export async function GET(req: NextRequest) {
 //Crear aplicacion
 export async function POST(req: Request) {
   try {
+    console.log("[API /api/applications POST] Petición iniciada.");
 
     const body = (await req.json()) as CreateApplicationInput;
-    console.log("Body - api/POST" , body);
+    console.log("[API /api/applications POST] Body parseado:", body);
 
     const { ingresos, egresos, cuotaAprox } = body;
 
@@ -40,30 +41,38 @@ export async function POST(req: Request) {
       egresos == null ||
       cuotaAprox == null
     ) {
+      console.warn("[API /api/applications POST] Falló validación: ingresos, egresos o cuotaAprox son null.");
       return new Response(
         JSON.stringify({ message: "Datos incompletos" }),
         { status: 400 }
       );
     }
 
+    console.log("[API /api/applications POST] Calculando estado de aprobación...");
     const status = calcularProbabilidadAprobacion({
       ingresos,
       egresos,
       cuotaAprox,
     });    
+    console.log("[API /api/applications POST] Estado calculado:", status);
     
+    console.log("[API /api/applications POST] Llamando a applicationRepository.create...");
     const created = await applicationRepository.create({
       ...body,
       status,
     });
+    console.log("[API /api/applications POST] Creación exitosa en repositorio. Resultado:", created);
 
     return Response.json(created, { status: 201 });
 
   } catch (error) {
 
-    console.error("❌ API ERROR:", error);
+    console.error("❌ [API /api/applications POST] ERROR capturado en catch:", error);
     return new Response(
-      JSON.stringify({ message: "Error creando solicitud" }),
+      JSON.stringify({ 
+        message: "Error creando solicitud", 
+        error: error instanceof Error ? error.message : String(error) 
+      }),
       { status: 500 }
     );
   }
