@@ -57,6 +57,16 @@ export const applicationApi = {
     return res.json();
   },
 
+  getByIdentification: async (identification: string): Promise<Application[]> => {
+    const res = await fetch(`/api/applications/consult/${identification}`);
+
+    if (!res.ok) {
+      throw new Error(await getErrorMessage(res, "Error obteniendo solicitudes"));
+    }
+
+    return res.json();
+  },
+
   getById: async (id: string): Promise<Application> => {
     const res = await fetch(`/api/applications/${id}`, {
       headers: {

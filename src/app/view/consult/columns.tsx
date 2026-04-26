@@ -16,6 +16,11 @@ export const getColumns = (
     cell: ({ row }) => <div className="font-medium">{row.getValue("name")}</div>,
   },
   {
+    accessorKey: "identification",
+    header: "Identificación",
+    cell: ({ row }) => <div className="font-medium">{row.getValue("identification")}</div>,
+  },  
+  {
     accessorKey: "email",
     header: "Email",
     cell: ({ row }) => <div className="lowercase">{row.getValue("email")}</div>,
