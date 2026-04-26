@@ -1,6 +1,6 @@
 export default function FormLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-transparent pt-10 md:pt-0"> 
+    <div className="min-h-screen bg-transparent px-4 pt-28 pb-6 md:flex md:items-center md:justify-center md:px-6 md:pt-24"> 
       {children}
     </div>
   );

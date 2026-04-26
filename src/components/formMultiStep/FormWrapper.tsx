@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { motion } from "framer-motion";
+import { RoughNotation } from "react-rough-notation";
 
 type FormWrapperProps = {
   title: string;
@@ -35,10 +36,16 @@ const FormWrapper = ({ title, description, children }: FormWrapperProps) => {
       exit="exit"
     >
       <div className="flex flex-col gap-1">
-        <h2 className="text-xl font-semibold text-white md:text-2xl">
-          {title}
-        </h2>
-        <p className="text-sm text-neutral-300 md:text-base">{description}</p>
+
+        <h2 className="text-xl font-semibold text-foreground md:text-2xl mb-2">
+          <RoughNotation
+                type="underline"
+                show={true}
+                color={"#09344a"}
+                animationDuration={1000}
+              > {title}</RoughNotation>  
+        </h2>      
+        <p className="text-sm text-muted-foreground md:text-base">{description}</p>
       </div>
       {children}
     </motion.div>

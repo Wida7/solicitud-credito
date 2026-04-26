@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 
-export const Logo = ({ className, uniColor = true }: { className?: string; uniColor?: boolean }) => {
+export const Logo = ({ className, }: { className?: string; uniColor?: boolean }) => {
     return (
     <svg
       className={cn("h-10 w-full text-primary transition-transform duration-200 hover:scale-105", className)}

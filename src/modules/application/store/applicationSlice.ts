@@ -2,10 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   createApplication,
   fetchApplications,
-  simulateApplication,
 } from "./applicationThunks";
 import { Application } from "./types";
-import { FormItems } from "../domain/types/form.types";
 
 interface State {
   items: Application[];
@@ -45,14 +43,6 @@ const applicationSlice = createSlice({
       .addCase(fetchApplications.fulfilled, (state, action) => {
         state.items = action.payload;
       })
-
-      // SIMULATE
-      .addCase(simulateApplication.fulfilled, (state, action) => {
-        // aquí podrías actualizar estado
-      })
-      .addCase(simulateApplication.rejected, (state) => {
-        state.error = "Error en simulación";
-      });
   },
 });
 

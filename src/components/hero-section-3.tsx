@@ -1,7 +1,5 @@
-import React from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
-import { HeroHeader } from './header'
 import Image from 'next/image'
 import InfiniteSliderBasic from './clientsSlider'
 
@@ -35,6 +33,7 @@ export default function HeroSection() {
 										height={64}
 										priority
 										className="mb-4 h-16 w-16 justify-self-center"
+										unoptimized
 									/>
 									<h1 className="text-balance text-primary font-serif text-4xl font-medium sm:text-5xl">
 										{titulo}
@@ -46,7 +45,7 @@ export default function HeroSection() {
 										asChild
 										className="m-4"
 										variant="default">
-										<Link href="/application-process">
+										<Link href="/view/application-process">
 											<span className="text-nowrap">
 												¡Empezar ahora!
 											</span>
@@ -73,6 +72,7 @@ export default function HeroSection() {
 										priority
 										loading="eager"
 										className="mx-auto h-64 w-auto transition-transform duration-700 md:hover:-translate-y-80 max-md:mt-20 max-md:animate-bounce"
+										unoptimized
 									/>
 								</div>
 							</div>

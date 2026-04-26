@@ -5,6 +5,10 @@ import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import React from 'react'
 import { cn } from '@/lib/utils'
+import { usePathname, useRouter } from 'next/navigation'
+import { useAppDispatch, useAppSelector } from '@/infrastructure/store/hooks'
+import { clearSession } from '@/modules/auth/store/authSlice'
+import { toast } from 'sonner'
 
 interface MenuItem {
 	name: string
@@ -20,6 +24,32 @@ const menuItems: MenuItem[] = [
 export const HeroHeader = () => {
 	const [menuState, setMenuState] = React.useState(false)
 	const [isScrolled, setIsScrolled] = React.useState(false)
+	const pathname = usePathname()
+	const router = useRouter()
+	const dispatch = useAppDispatch()
+	const session = useAppSelector((state) => state.auth.session)
+
+	const handleEmployeeAction = () => {
+		if (!session) {
+			router.push('/view/login')
+			setMenuState(false)
+			return
+		}
+
+		dispatch(clearSession())
+		setMenuState(false)
+		toast.success('Sesion cerrada correctamente', {
+			position: 'top-center',
+			className: 'bg-primary text-primary-foreground font-semibold',
+		})
+
+		if (pathname.startsWith('/view/admin')) {
+			router.push('/view/login')
+			return
+		}
+
+		router.refresh()
+	}
 
 	React.useEffect(() => {
 		const handleScroll = () => {
@@ -32,7 +62,7 @@ export const HeroHeader = () => {
 		<header>
 			<nav
 				data-state={menuState && 'active'}
-				className={cn('fixed z-20 w-full transition-all duration-300', isScrolled && 'bg-background/75 border-b border-black/5 backdrop-blur-lg')}>
+				className={cn('fixed z-20 w-full transition-all duration-300 top-0', isScrolled && 'bg-background/75 border-b border-black/5 backdrop-blur-lg')}>
 				<div className="mx-auto max-w-5xl px-6">
 					<div className="relative flex flex-wrap items-center justify-between gap-6 py-6 lg:gap-0">
 						<div className="flex w-full justify-between gap-6 lg:w-auto">
@@ -91,22 +121,21 @@ export const HeroHeader = () => {
 							}
 							<div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
 								<Button
-									asChild
+									key="login"
 									variant="ghost"
 									size="sm"
+									onClick={handleEmployeeAction}
 									className={cn(isScrolled && 'lg:hidden')}>
-									<Link href="#">
-										<span>Login</span>
-									</Link>
+									<span>{session ? 'Cerrar sesion' : 'Soy empleado'}</span>
 								</Button>
-								<Button
+{/* 								<Button
 									asChild
 									size="sm"
 									className={cn(isScrolled && 'lg:hidden')}>
 									<Link href="#">
 										<span>Sign Up</span>
 									</Link>
-								</Button>
+								</Button> */}
 								<Button
 									asChild
 									size="sm"

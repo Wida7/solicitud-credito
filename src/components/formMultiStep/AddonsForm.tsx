@@ -12,7 +12,7 @@ type stepProps = FormItems & {
   updateForm: (fieldToUpdate: Partial<FormItems>) => void;
 };
 
-const AddonsForm = ({ yearly, occupation, ingresos, egresos, updateForm }: stepProps) => {
+const AddonsForm = ({ occupation, ingresos, egresos, updateForm }: stepProps) => {
 
   const occupationOptions = OCCUPATIONS.map((occupation) => ({
     label: occupation.label,
@@ -46,7 +46,7 @@ const AddonsForm = ({ yearly, occupation, ingresos, egresos, updateForm }: stepP
           </SelectContent>
         </Select>
 
-        <Label className="text-primary mt-4" htmlFor="monto">Ingresos mensuales: ${ingresos.toLocaleString()}</Label>
+        <Label className="mt-4 text-foreground" htmlFor="monto">Ingresos mensuales: ${ingresos.toLocaleString()}</Label>
         <Input
           autoFocus
           inputMode="numeric"
@@ -58,10 +58,10 @@ const AddonsForm = ({ yearly, occupation, ingresos, egresos, updateForm }: stepP
             const raw = e.target.value.replace(/\D/g, "");
             updateForm({ ingresos: raw === "" ? 0 : Number(raw) });
           }}
-          className="w-full placeholder:text-slate-600 mt-2"
+          className="mt-2 w-full"
           required
         />
-        <Label className="text-primary mt-4" htmlFor="monto">Egresos mensuales: ${egresos.toLocaleString()}</Label>
+        <Label className="mt-4 text-foreground" htmlFor="monto">Egresos mensuales: ${egresos.toLocaleString()}</Label>
         <Input
           autoFocus
           inputMode="numeric"
@@ -73,7 +73,7 @@ const AddonsForm = ({ yearly, occupation, ingresos, egresos, updateForm }: stepP
             const raw = e.target.value.replace(/\D/g, "");
             updateForm({ egresos: raw === "" ? 0 : Number(raw) });
           }}
-          className="w-full placeholder:text-slate-600 mt-2"
+          className="mt-2 w-full"
           required
         />
       </div>
