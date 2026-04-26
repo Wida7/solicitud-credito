@@ -4,8 +4,8 @@ import FormWrapper from "./FormWrapper";
 import { FormItems } from "@/modules/application/domain/types/form.types";
 import { formatCurrency } from "@/lib/utils/formatCurrency";
 import Image from "next/image";
-import prestamo from "../../../public/assets/prestamo.png";
-import calendario from "../../../public/assets/calendario.png";
+import prestamo from "../../../../public/assets/prestamo.png";
+import calendario from "../../../../public/assets/calendario.png";
 
 type StepProps = FormItems & {
   goTo: (index: number) => void;

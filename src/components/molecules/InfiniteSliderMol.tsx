@@ -1,7 +1,7 @@
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
 import Image from "next/image";
 
-function InfiniteSliderBasic() {
+function InfiniteSliderMol() {
 
   const CLIENTS = [
     { src: "https://motion-primitives.com/apple_music_logo.svg", alt: "Apple Music" },
@@ -31,5 +31,5 @@ function InfiniteSliderBasic() {
   );
 }
 
-export default InfiniteSliderBasic;
+export default InfiniteSliderMol;
 

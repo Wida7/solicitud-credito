@@ -11,8 +11,8 @@ import {
 	AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { useId, useState } from "react";
-import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { Input } from "../ui/input";
+import { RadioGroup, RadioGroupItem } from "../../ui/radio-group";
+import { Input } from "../../ui/input";
 import { FormItems } from "@/modules/application/domain/types/form.types";
 import { AbandonApplication } from "@/modules/abandon/domain/types/abandon.types";
 import { AbandonItems } from "@/modules/abandon/domain/types/form.types";

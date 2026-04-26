@@ -5,14 +5,14 @@ import {
   Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select"
 import { OCCUPATIONS } from "@/modules/application/constants/occupations"
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
+import { Label } from "../../ui/label";
+import { Input } from "../../ui/input";
 
 type stepProps = FormItems & {
   updateForm: (fieldToUpdate: Partial<FormItems>) => void;
 };
 
-const AddonsForm = ({ occupation, ingresos, egresos, updateForm }: stepProps) => {
+const FinancialForm = ({ occupation, ingresos, egresos, updateForm }: stepProps) => {
 
   const occupationOptions = OCCUPATIONS.map((occupation) => ({
     label: occupation.label,
@@ -79,4 +79,4 @@ const AddonsForm = ({ occupation, ingresos, egresos, updateForm }: stepProps) =>
   );
 };
 
-export default AddonsForm;
+export default FinancialForm;

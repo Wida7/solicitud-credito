@@ -17,7 +17,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { Input } from "../ui/input";
+import { Input } from "../../ui/input";
 import { toast } from "sonner";
 import {
 	Application,
@@ -26,8 +26,8 @@ import {
 import { useState } from "react";
 import { validateApplicationField } from "@/modules/application/domain/validations/application.validator";
 import { formatDateColombia } from "@/lib/utils/date";
-import { SkeletonTable } from "../ui/skeleton";
-import { Button } from "../ui/button";
+import { SkeletonTable } from "../../ui/skeleton";
+import { Button } from "../../ui/button";
 import { LoaderCircle, Trash2 } from "lucide-react";
 
 type FormViewApplicationPros = {

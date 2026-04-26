@@ -4,12 +4,12 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useMultiplestepForm } from "@/hooks/useMultiplestepForm";
 import { AnimatePresence } from "framer-motion";
-import UserInfoForm from "@/components/formMultiStep/UserInfoForm";
-import PlanForm from "@/components/formMultiStep/PlanForm";
-import AddonsForm from "@/components/formMultiStep/AddonsForm";
-import FinalStep from "@/components/formMultiStep/FinalStep";
-import SuccessMessage from "@/components/formMultiStep/SuccessMessage";
-import SideBar from "@/components/formMultiStep/SideBar";
+import UserInfoForm from "@/components/organisms/formMultiStep/UserInfoForm";
+import TermsForm from "@/components/organisms/formMultiStep/TermsForm";
+import FinancialForm from "@/components/organisms/formMultiStep/FinancialForm";
+import FinalStep from "@/components/organisms/formMultiStep/FinalStep";
+import SuccessMessage from "@/components/organisms/formMultiStep/SuccessMessage";
+import SideBar from "@/components/organisms/formMultiStep/SideBar";
 import { FormItems } from "@/modules/application/domain/types/form.types";
 import { useAppDispatch } from "@/infrastructure/store/hooks";
 import { canGoNext } from "./validationSteps";
@@ -18,7 +18,7 @@ import { createApplication } from "@/modules/application/store/applicationThunks
 import { applicationApi } from "@/modules/application/services/applicationApi";
 import { CreateApplicationInput } from "@/modules/application/domain/types/application.types";
 import { Trash2 } from "lucide-react"
-import AbandonProcess from "@/components/formMultiStep/AbandonProcess";
+import AbandonProcess from "@/components/organisms/formMultiStep/AbandonProcess";
 import { validateApplicationField } from "@/modules/application/domain/validations/application.validator";
 
 
@@ -109,7 +109,7 @@ export default function Home() {
 
 
 function updateForm(fieldToUpdate: Partial<FormItems>) {
-  console.log("Validando campo:", fieldToUpdate);
+  //console.log("Validando campo:", fieldToUpdate);
 
   const newErrors = validateApplicationField(fieldToUpdate);
 
@@ -185,10 +185,10 @@ function updateForm(fieldToUpdate: Partial<FormItems>) {
                   />
                 )}
                 {currentStepIndex === 1 && (
-                  <PlanForm key="step2" {...formData} updateForm={updateForm} errors={errors} />
+                  <TermsForm key="step2" {...formData} updateForm={updateForm} errors={errors} />
                 )}
                 {currentStepIndex === 2 && (
-                  <AddonsForm key="step3" {...formData} updateForm={updateForm} />
+                  <FinancialForm key="step3" {...formData} updateForm={updateForm} />
                 )}
                 {currentStepIndex === 3 && (
                   <FinalStep key="step4" {...formData} goTo={goTo} />

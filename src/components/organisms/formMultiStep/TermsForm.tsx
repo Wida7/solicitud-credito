@@ -17,7 +17,7 @@ type stepProps = FormItems & {
 
 type Plazo = 0 | 1 | 3 | 5 | 6 | 9;
 
-const MontoYPlazoForm = ({ updateForm, plazo, monto, yearly, errors }: stepProps) => {
+const TermsForm = ({ updateForm, plazo, monto, yearly, errors }: stepProps) => {
   const [yearlyUpdated, setYearlyUpdated] = useState(yearly);
   const [plazoSelected, setPlazoSelected] = useState<Plazo>(plazo);
 
@@ -122,4 +122,4 @@ const MontoYPlazoForm = ({ updateForm, plazo, monto, yearly, errors }: stepProps
   );
 };
 
-export default MontoYPlazoForm;
+export default TermsForm;

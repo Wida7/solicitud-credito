@@ -1,9 +1,9 @@
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import Image from 'next/image'
-import InfiniteSliderBasic from './clientsSlider'
+import InfiniteSliderMol from '../molecules/InfiniteSliderMol'
 
-export default function HeroSection() {
+export default function LandingPageSection() {
 
 	const titulo = "¡Impulsa tu negocio!";
 	const textoParrafo = "El acceso a financiamiento es crucial para el crecimiento de tu negocio. Nuestra plataforma de solicitud de crédito en línea te ofrece una forma rápida y sencilla de obtener el capital que necesitas para expandir tu empresa, invertir en nuevos proyectos o superar desafíos financieros. Con un proceso completamente digital puedes solicitar tu crédito desde cualquier lugar y en cualquier momento, sin complicaciones ni papeleo innecesario. ¡Impulsa tu negocio con nosotros hoy mismo!";
@@ -84,7 +84,7 @@ export default function HeroSection() {
     <section className="bg-background py-6 relative">
 			<div className="text-center text-lg font-semibold text-primary"> Nuestros casos de éxito	</div>
 			<div className="absolute top-0 left-0 h-full w-14 backdrop-blur-sm bg-white/30 pointer-events-none z-10"></div>
-        <InfiniteSliderBasic />
+        <InfiniteSliderMol />
 			<div className="absolute top-0 right-0 h-full w-14 backdrop-blur-sm bg-white/30 pointer-events-none z-10"></div>
     </section>				
 			</main>

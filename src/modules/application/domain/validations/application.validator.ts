@@ -62,7 +62,7 @@ if (field.identification !== undefined) {
   }
 }
 
-  console.log("Validator ", errors);
+  //console.log("Validator ", errors);
 
   return errors;
 }

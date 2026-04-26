@@ -6,7 +6,7 @@ import DataTable from "@/components/molecules/DataTable";
 import { Application } from "@/modules/application/domain/types/application.types";
 import { applicationApi } from "@/modules/application/services/applicationApi";
 import { getColumns } from "./columns";
-import FormViewApplication from "@/components/formViewApplication/FormViewApplication";
+import FormViewApplication from "@/components/organisms/formViewApplication/FormViewApplication";
 import { SkeletonTable } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 import { useAppSelector } from "@/infrastructure/store/hooks";

@@ -15,11 +15,13 @@ const getErrorMessage = async (res: Response, fallbackMessage: string) => {
 
 export const applicationApi = {
   create: async (data: CreateApplicationInput): Promise<Application> => {
-    console.log("[applicationApi.create] Iniciando petición a /api/applications con data:", data);
+    //console.log("[applicationApi.create] Iniciando petición a /api/applications con data:", data);
+    console.log("[applicationApi.create] Iniciando petición a /api/applications");
+
     const res = await fetch("/api/applications", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json", // 🔥 importante
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     });
@@ -33,7 +35,9 @@ export const applicationApi = {
     }
 
     const responseData = await res.json();
-    console.log("[applicationApi.create] Petición exitosa, parseada a JSON:", responseData);
+    //console.log("[applicationApi.create] Petición exitosa, parseada a JSON:", responseData);
+    console.log("[applicationApi.create] Petición exitosa");
+
     return responseData;
   },
 
