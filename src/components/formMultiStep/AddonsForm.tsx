@@ -32,7 +32,7 @@ const AddonsForm = ({ occupation, ingresos, egresos, updateForm }: stepProps) =>
             updateForm({ occupation: value });
           }}
         >
-          <SelectTrigger className="w-45">
+          <SelectTrigger className="w-45" autoFocus>
             <SelectValue placeholder="Indique su ocupación" />
           </SelectTrigger>
           <SelectContent position="popper">
@@ -46,9 +46,8 @@ const AddonsForm = ({ occupation, ingresos, egresos, updateForm }: stepProps) =>
           </SelectContent>
         </Select>
 
-        <Label className="mt-4 text-foreground" htmlFor="monto">Ingresos mensuales: ${ingresos.toLocaleString()}</Label>
+        <Label className="mt-4 text-foreground" htmlFor="ingresos">Ingresos mensuales: ${ingresos.toLocaleString()}</Label>
         <Input
-          autoFocus
           inputMode="numeric"
           name="monto"
           id="monto"
@@ -61,9 +60,8 @@ const AddonsForm = ({ occupation, ingresos, egresos, updateForm }: stepProps) =>
           className="mt-2 w-full"
           required
         />
-        <Label className="mt-4 text-foreground" htmlFor="monto">Egresos mensuales: ${egresos.toLocaleString()}</Label>
+        <Label className="mt-4 text-foreground" htmlFor="egresos">Egresos mensuales: ${egresos.toLocaleString()}</Label>
         <Input
-          autoFocus
           inputMode="numeric"
           name="monto"
           id="monto"

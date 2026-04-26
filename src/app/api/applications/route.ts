@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
   }
 }
 
-
+//Crear aplicacion
 export async function POST(req: Request) {
   try {
 

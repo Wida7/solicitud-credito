@@ -57,7 +57,7 @@ export default function HeroSection() {
 										variant="secondary">
 										<Link href="#link">
 											<span className="text-nowrap">
-												¿Necesitas ayuda?
+												Consultar solicitudes
 											</span>
 										</Link>
 									</Button>									

@@ -2,18 +2,7 @@ import {
   Application, CreateApplicationInput,
 } from "../domain/types/application.types";
 
-const getAuthHeaders = async () => {
-  const { store } = await import("@/infrastructure/store");
-  const token = store.getState().auth.session?.token;
-
-  const headers: Record<string, string> = {};
-
-  if (token) {
-    headers.Authorization = `Bearer ${token}`;
-  }
-
-  return headers;
-};
+import { getClientAuthHeaders } from "@/modules/auth/utils/clientSession";
 
 const getErrorMessage = async (res: Response, fallbackMessage: string) => {
   try {
@@ -44,12 +33,14 @@ export const applicationApi = {
   list: async (): Promise<Application[]> => {
     const res = await fetch("/api/applications", {
       headers: {
-        ...(await getAuthHeaders()),
+        ...getClientAuthHeaders(),
       },
     });
 
     if (!res.ok) {
-      throw new Error(await getErrorMessage(res, "Error obteniendo solicitudes"));
+      const error = await getErrorMessage(res, "Error obteniendo solicitudes");
+      console.error("API ERROR:", res.status, error);
+      throw new Error(`(${res.status}) ${error}`);
     }
 
     return res.json();
@@ -58,7 +49,7 @@ export const applicationApi = {
   getById: async (id: string): Promise<Application> => {
     const res = await fetch(`/api/applications/${id}`, {
       headers: {
-        ...(await getAuthHeaders()),
+        ...getClientAuthHeaders(),
       },
     });
 
@@ -74,7 +65,7 @@ export const applicationApi = {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-        ...(await getAuthHeaders()),
+        ...getClientAuthHeaders(),
       },
       body: JSON.stringify(data),
     });
@@ -90,7 +81,7 @@ export const applicationApi = {
     const res = await fetch(`/api/applications/${id}`, {
       method: "DELETE",
       headers: {
-        ...(await getAuthHeaders()),
+        ...getClientAuthHeaders(),
       },
     });
 
