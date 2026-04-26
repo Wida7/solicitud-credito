@@ -10,7 +10,6 @@ import AddonsForm from "@/components/formMultiStep/AddonsForm";
 import FinalStep from "@/components/formMultiStep/FinalStep";
 import SuccessMessage from "@/components/formMultiStep/SuccessMessage";
 import SideBar from "@/components/formMultiStep/SideBar";
-import { formatCurrency } from "@/lib/utils/formatCurrency";
 import { FormItems } from "@/modules/application/domain/types/form.types";
 import { useAppDispatch } from "@/infrastructure/store/hooks";
 import { canGoNext } from "./validationSteps";
@@ -20,6 +19,7 @@ import { applicationApi } from "@/modules/application/services/applicationApi";
 import { CreateApplicationInput } from "@/modules/application/domain/types/application.types";
 import { Trash2 } from "lucide-react"
 import AbandonProcess from "@/components/formMultiStep/AbandonProcess";
+import { validateApplicationField } from "@/modules/application/domain/validations/application.validator";
 
 
 const initialValues: FormItems = {
@@ -77,7 +77,7 @@ export default function Home() {
       yearly: formData.yearly,
 
       //campos que NO vienen del form
-      status: "DRAFT",
+      status: "PENDIENTE",
     };
 
 
@@ -98,6 +98,7 @@ export default function Home() {
         console.error(error);
         toast.error("Error al enviar la solicitud", {
           description: errorMessage,
+          position: "top-center"
         });
       }
       return;
@@ -107,76 +108,21 @@ export default function Home() {
   };
 
 
-  function updateForm(fieldToUpdate: Partial<FormItems>) {
-    const { name, email, phone } = fieldToUpdate;
-    console.log("Validando campo:", fieldToUpdate);
-    const constansValidation = {
-      name: {
-        minLength: 3,
-        maxLength: 40,
-      },
-      monto: {
-        min: 500000,
-      },
-    }
+function updateForm(fieldToUpdate: Partial<FormItems>) {
+  console.log("Validando campo:", fieldToUpdate);
 
-    if (name && name.trim().length < constansValidation.name.minLength) {
-      setErrors((prevState) => ({
-        ...prevState,
-        name: `Nombre debe tener al menos ${constansValidation.name.minLength} caracteres`,
-      }));
-    } else if (name && name.trim().length > constansValidation.name.maxLength) {
-      setErrors((prevState) => ({
-        ...prevState,
-        name: `Nombre no debe tener más de ${constansValidation.name.maxLength} caracteres`,
-      }));
-    } else {
-      setErrors((prevState) => ({
-        ...prevState,
-        name: "",
-      }));
-    }
+  const newErrors = validateApplicationField(fieldToUpdate);
 
-    if (email && !/\S+@\S+\.\S+/.test(email)) {
-      setErrors((prevState) => ({
-        ...prevState,
-        email: "Por favor, introduce una dirección de correo electrónico válida",
-      }));
-    } else {
-      setErrors((prevState) => ({
-        ...prevState,
-        email: "",
-      }));
-    }
+  setErrors(prev => ({
+    ...prev,
+    ...newErrors,
+  }));
 
-    if (phone && !/^[0-9]{10}$/.test(phone)) {
-      setErrors((prevState) => ({
-        ...prevState,
-        phone: "Por favor, introduce un número de teléfono válido de 10 dígitos",
-      }));
-    } else {
-      setErrors((prevState) => ({
-        ...prevState,
-        phone: "",
-      }));
-    }
-    //console.log("Datos del form", formData);
-    
-    //console.log(fieldToUpdate.monto, constansValidation.monto.min)
-    if (fieldToUpdate.monto !== undefined && fieldToUpdate.monto < constansValidation.monto.min) {
-      setErrors((prevState) => ({
-        ...prevState,
-        monto: `El monto no puede ser menor a:  ${formatCurrency(constansValidation.monto.min)}`,
-      }));
-    } else {
-      setErrors((prevState) => ({
-        ...prevState,
-        monto: "",
-      }));
-    }
-
-    setFormData(prev => ({ ...prev, ...fieldToUpdate }));
-  }
+  setFormData(prev => ({
+    ...prev,
+    ...fieldToUpdate,
+  }));
+}
 
   const handleOnSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

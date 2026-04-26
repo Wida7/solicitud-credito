@@ -1,14 +1,18 @@
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { formatCurrency } from "@/lib/utils/formatCurrency";
 import { Application } from "@/modules/application/domain/types/application.types";
 import type { ColumnDef } from "@tanstack/react-table";
+import { Eye } from "lucide-react";
 
 const moneyCell = (value: number) => (
-  <div className="text-right font-medium">{formatCurrency(value)}</div>
+  <div className=" font-medium">{formatCurrency(value)}</div>
 );
 
-export const columns: ColumnDef<Application>[] = [
+export const getColumns = (
+  onView: (id: string) => void
+): ColumnDef<Application>[] => [
   {
     accessorKey: "name",
     header: "Nombre",
@@ -31,17 +35,17 @@ export const columns: ColumnDef<Application>[] = [
   },
   {
     accessorKey: "ingresos",
-    header: () => <div className="text-right">Ingresos</div>,
+    header: () => <div className="">Ingresos</div>,
     cell: ({ row }) => moneyCell(row.getValue("ingresos")),
   },
   {
     accessorKey: "egresos",
-    header: () => <div className="text-right">Egresos</div>,
+    header: () => <div className="">Egresos</div>,
     cell: ({ row }) => moneyCell(row.getValue("egresos")),
   },
   {
     accessorKey: "monto",
-    header: () => <div className="text-right">Monto</div>,
+    header: () => <div className="">Monto</div>,
     cell: ({ row }) => moneyCell(row.getValue("monto")),
   },
   {
@@ -51,11 +55,11 @@ export const columns: ColumnDef<Application>[] = [
       const status = row.getValue<Application["status"]>("status");
 
       const styles = {
-        APPROVED:
+        APROBADO:
           "bg-green-600/10 text-green-600 focus-visible:ring-green-600/20 dark:bg-green-400/10 dark:text-green-400 dark:focus-visible:ring-green-400/40 [a&]:hover:bg-green-600/5 dark:[a&]:hover:bg-green-400/5",
-        REJECTED:
+        RECHAZADO:
           "bg-destructive/10 [a&]:hover:bg-destructive/5 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 text-destructive",
-        DRAFT:
+        PENDIENTE:
           "bg-amber-600/10 text-amber-600 focus-visible:ring-amber-600/20 dark:bg-amber-400/10 dark:text-amber-400 dark:focus-visible:ring-amber-400/40 [a&]:hover:bg-amber-600/5 dark:[a&]:hover:bg-amber-400/5",
       }[status];
 
@@ -66,4 +70,17 @@ export const columns: ColumnDef<Application>[] = [
       );
     },
   },
+  {
+  id: "actions",
+  header: "Acciones",
+  cell: ({ row }) => {
+    const application = row.original;
+
+    return (
+      <Button onClick={() => onView(application.id)}>
+        <Eye />
+      </Button>
+    );
+  },
+},
 ];

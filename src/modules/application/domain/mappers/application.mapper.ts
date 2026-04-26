@@ -17,7 +17,7 @@ export function mapFormToApplication(data: FormItems): Application {
     egresos: data.egresos,
     occupation: data.occupation,
     yearly: data.yearly,
-    status: "DRAFT",
+    status: "PENDIENTE",
     createdAt: new Date().toISOString(),
   };
 }

@@ -134,7 +134,7 @@ const DataTable = <TData,>({ data, columns }: DataTableProps<TData>) => {
 			<div className='flex justify-between gap-2 pb-4 max-sm:flex-col sm:items-center'>
 				<div className='flex items-center space-x-2'>
 					<Input
-						placeholder='Search all columns...'
+						placeholder='Buscar...'
 						value={globalFilter ?? ''}
 						onChange={event => setGlobalFilter(String(event.target.value))}
 						className='max-w-sm'
@@ -152,7 +152,7 @@ const DataTable = <TData,>({ data, columns }: DataTableProps<TData>) => {
 						<DropdownMenuTrigger asChild>
 							<Button variant='outline' size='sm'>
 								<DownloadIcon className='mr-2' />
-								Export
+								Exportar
 							</Button>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent align='end'>
@@ -180,7 +180,7 @@ const DataTable = <TData,>({ data, columns }: DataTableProps<TData>) => {
 							<TableRow key={headerGroup.id}>
 								{headerGroup.headers.map(header => {
 									return (
-										<TableHead key={header.id}>
+										<TableHead key={header.id} className="text-center">
 											{header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
 										</TableHead>
 									)

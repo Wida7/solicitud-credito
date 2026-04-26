@@ -5,6 +5,10 @@ import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import React from 'react'
 import { cn } from '@/lib/utils'
+import { usePathname, useRouter } from 'next/navigation'
+import { useAppDispatch, useAppSelector } from '@/infrastructure/store/hooks'
+import { clearSession } from '@/modules/auth/store/authSlice'
+import { toast } from 'sonner'
 
 interface MenuItem {
 	name: string
@@ -20,6 +24,32 @@ const menuItems: MenuItem[] = [
 export const HeroHeader = () => {
 	const [menuState, setMenuState] = React.useState(false)
 	const [isScrolled, setIsScrolled] = React.useState(false)
+	const pathname = usePathname()
+	const router = useRouter()
+	const dispatch = useAppDispatch()
+	const session = useAppSelector((state) => state.auth.session)
+
+	const handleEmployeeAction = () => {
+		if (!session) {
+			router.push('/view/login')
+			setMenuState(false)
+			return
+		}
+
+		dispatch(clearSession())
+		setMenuState(false)
+		toast.success('Sesion cerrada correctamente', {
+			position: 'top-center',
+			className: 'bg-primary text-primary-foreground font-semibold',
+		})
+
+		if (pathname.startsWith('/view/admin')) {
+			router.push('/view/login')
+			return
+		}
+
+		router.refresh()
+	}
 
 	React.useEffect(() => {
 		const handleScroll = () => {
@@ -91,13 +121,12 @@ export const HeroHeader = () => {
 							}
 							<div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
 								<Button
-									asChild
+									key="login"
 									variant="ghost"
 									size="sm"
+									onClick={handleEmployeeAction}
 									className={cn(isScrolled && 'lg:hidden')}>
-									<Link href="/view/admin/reviews">
-										<span>Soy empleado</span>
-									</Link>
+									<span>{session ? 'Cerrar sesion' : 'Soy empleado'}</span>
 								</Button>
 {/* 								<Button
 									asChild

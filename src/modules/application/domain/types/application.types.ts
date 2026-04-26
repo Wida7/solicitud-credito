@@ -1,6 +1,6 @@
 import { FormItems } from "./form.types";
 
-export type ApplicationStatus = "DRAFT" | "APPROVED" | "REJECTED";
+export type ApplicationStatus = "PENDIENTE" | "APROBADO" | "RECHAZADO";
 
 export type CreateApplicationInput = FormItems & {
   status?: ApplicationStatus;
