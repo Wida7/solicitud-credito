@@ -1,7 +1,7 @@
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@/frontend/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { formatCurrency } from "@/lib/utils/formatCurrency";
-import { Application } from "@/modules/application/domain/types/application.types";
+import { Application } from "@/core/domain/types/application.types";
 import type { ColumnDef } from "@tanstack/react-table";
 
 const moneyCell = (value: number) => (

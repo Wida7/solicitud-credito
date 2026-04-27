@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Figtree } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import { HeroHeader } from "@/components/templates/header";
+import { HeroHeader } from "@/frontend/components/templates/header";
 import { Toaster } from "sonner";
-import ReduxProvider from "@/infrastructure/providers/ReduxProvider";
+import ReduxProvider from "@/frontend/providers/ReduxProvider";
 
 
 const figtree = Figtree({ subsets: ['latin'], variable: '--font-sans' });

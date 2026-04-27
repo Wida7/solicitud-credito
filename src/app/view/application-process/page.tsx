@@ -1,25 +1,25 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { useMultiplestepForm } from "@/hooks/useMultiplestepForm";
+import { Button } from "@/frontend/components/ui/button";
+import { useMultiplestepForm } from "@/frontend/hooks/useMultiplestepForm";
 import { AnimatePresence } from "framer-motion";
-import UserInfoForm from "@/components/organisms/formMultiStep/UserInfoForm";
-import TermsForm from "@/components/organisms/formMultiStep/TermsForm";
-import FinancialForm from "@/components/organisms/formMultiStep/FinancialForm";
-import FinalStep from "@/components/organisms/formMultiStep/FinalStep";
-import SuccessMessage from "@/components/organisms/formMultiStep/SuccessMessage";
-import SideBar from "@/components/organisms/formMultiStep/SideBar";
-import { FormItems } from "@/modules/application/domain/types/form.types";
-import { useAppDispatch } from "@/infrastructure/store/hooks";
+import UserInfoForm from "@/frontend/components/organisms/formMultiStep/UserInfoForm";
+import TermsForm from "@/frontend/components/organisms/formMultiStep/TermsForm";
+import FinancialForm from "@/frontend/components/organisms/formMultiStep/FinancialForm";
+import FinalStep from "@/frontend/components/organisms/formMultiStep/FinalStep";
+import SuccessMessage from "@/frontend/components/organisms/formMultiStep/SuccessMessage";
+import SideBar from "@/frontend/components/organisms/formMultiStep/SideBar";
+import { FormItems } from "@/core/domain/types/form.types";
+import { useAppDispatch } from "@/frontend/store/hooks";
 import { canGoNext } from "./validationSteps";
 import { toast } from "sonner";
-import { createApplication } from "@/modules/application/store/applicationThunks";
-import { applicationApi } from "@/modules/application/services/applicationApi";
-import { CreateApplicationInput } from "@/modules/application/domain/types/application.types";
+import { createApplication } from "@/frontend/store/applicationThunks";
+import { applicationApi } from "@/frontend/services/applicationApi";
+import { CreateApplicationInput } from "@/core/domain/types/application.types";
 import { Trash2 } from "lucide-react"
-import AbandonProcess from "@/components/organisms/formMultiStep/AbandonProcess";
-import { validateApplicationField } from "@/modules/application/domain/validations/application.validator";
+import AbandonProcess from "@/frontend/components/organisms/formMultiStep/AbandonProcess";
+import { validateApplicationField } from "@/core/validations/application.validator";
 
 
 const initialValues: FormItems = {

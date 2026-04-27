@@ -1,17 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import DataTable from "@/components/molecules/DataTable";
-import { Application } from "@/modules/application/domain/types/application.types";
+import DataTable from "@/frontend/components/molecules/DataTable";
+import { Application } from "@/core/domain/types/application.types";
 import { getColumns } from "./columns";
-import { SkeletonTable } from "@/components/ui/skeleton";
-import { Button } from "@/components/ui/button";
-import { Input as InputIU } from "@/components/ui/input";
-import { validateApplicationField } from "@/modules/application/domain/validations/application.validator";
-import { applicationApi } from "@/modules/application/services/applicationApi";
+import { SkeletonTable } from "@/frontend/components/ui/skeleton";
+import { Button } from "@/frontend/components/ui/button";
+import { Input as InputIU } from "@/frontend/components/ui/input";
+import { validateApplicationField } from "@/core/validations/application.validator";
+import { applicationApi } from "@/frontend/services/applicationApi";
 import { toast } from "sonner";
 import { Search } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
+import { Separator } from "@/frontend/components/ui/separator";
 
 type Filters = {
   identification: Application["identification"];

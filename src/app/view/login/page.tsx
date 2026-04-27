@@ -3,11 +3,11 @@
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { authApi } from "@/modules/auth/services/authApi";
-import { useAppDispatch, useAppSelector } from "@/infrastructure/store/hooks";
-import { setSession } from "@/modules/auth/store/authSlice";
+import { Input } from "@/frontend/components/ui/input";
+import { Button } from "@/frontend/components/ui/button";
+import { authApi } from "@/frontend/services/authApi";
+import { useAppDispatch, useAppSelector } from "@/frontend/store/hooks";
+import { setSession } from "@/frontend/store/authSlice";
 
 export default function LoginPage() {
   const router = useRouter();

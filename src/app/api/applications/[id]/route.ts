@@ -1,6 +1,6 @@
 import { NextRequest } from "next/server";
-import { applicationRepository } from "@/modules/application/repository/applicationRepository";
-import { requireEmployeeAuth } from "@/modules/auth/utils/requireEmployeeAuth";
+import { applicationRepository } from "@/backend/repository/applicationRepository";
+import { requireEmployeeAuth } from "@/backend/services/requireEmployeeAuth";
 
 export async function GET(
   req: NextRequest,

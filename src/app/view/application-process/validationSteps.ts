@@ -1,4 +1,4 @@
-import { FormItems } from "@/modules/application/domain/types/form.types";
+import { FormItems } from "@/core/domain/types/form.types";
 
 export function validateStep1(data: FormItems) {
   return (

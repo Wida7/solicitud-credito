@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { applicationRepository } from "@/modules/application/repository/applicationRepository";
+import { applicationRepository } from "@/backend/repository/applicationRepository";
 
 export async function GET(
   req: NextRequest,

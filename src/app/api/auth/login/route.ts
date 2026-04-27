@@ -1,11 +1,11 @@
 import { compare } from "bcryptjs";
 import bcrypt from "bcryptjs";
-import { authRepository } from "@/modules/auth/repository/authRepository";
+import { authRepository } from "@/backend/repository/authRepository";
 import {
   AuthSession,
   LoginCredentials,
-} from "@/modules/auth/domain/types/auth.types";
-import { createAuthToken } from "@/modules/auth/utils/authToken";
+} from "@/core/domain/types/auth.types";
+import { createAuthToken } from "@/backend/services/authToken";
 
 export async function POST(req: Request) {
   try {

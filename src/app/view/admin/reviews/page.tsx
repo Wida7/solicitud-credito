@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import DataTable from "@/components/molecules/DataTable";
-import { Application } from "@/modules/application/domain/types/application.types";
-import { applicationApi } from "@/modules/application/services/applicationApi";
+import DataTable from "@/frontend/components/molecules/DataTable";
+import { Application } from "@/core/domain/types/application.types";
+import { applicationApi } from "@/frontend/services/applicationApi";
 import { getColumns } from "./columns";
-import FormViewApplication from "@/components/organisms/formViewApplication/FormViewApplication";
-import { SkeletonTable } from "@/components/ui/skeleton";
+import FormViewApplication from "@/frontend/components/organisms/formViewApplication/FormViewApplication";
+import { SkeletonTable } from "@/frontend/components/ui/skeleton";
 import { toast } from "sonner";
-import { useAppSelector } from "@/infrastructure/store/hooks";
+import { useAppSelector } from "@/frontend/store/hooks";
 
 export default function ReviewsPage() {
   const router = useRouter();
