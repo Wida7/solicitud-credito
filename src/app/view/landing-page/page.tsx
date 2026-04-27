@@ -1,11 +1,11 @@
-import { HeroHeader } from "@/components/header"
-import HeroSection from "@/components/hero-section-3";
+import { HeroHeader } from "@/frontend/components/templates/header"
+import LandingPageSection from "@/frontend/components/templates/LandingPageSection";
 
 export default function Home() {
 	return (
 		<>
 			<HeroHeader />
-			<HeroSection />
+			<LandingPageSection />
 		</>
 	);
 }

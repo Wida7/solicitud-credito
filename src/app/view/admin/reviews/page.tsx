@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import DataTable from "@/components/molecules/DataTable";
-import { Application } from "@/modules/application/domain/types/application.types";
-import { applicationApi } from "@/modules/application/services/applicationApi";
+import DataTable from "@/frontend/components/molecules/DataTable";
+import { Application } from "@/core/domain/types/application.types";
+import { applicationApi } from "@/frontend/services/applicationApi";
 import { getColumns } from "./columns";
-import FormViewApplication from "@/components/formViewApplication/FormViewApplication";
-import { SkeletonTable } from "@/components/ui/skeleton";
+import FormViewApplication from "@/frontend/components/organisms/formViewApplication/FormViewApplication";
+import { SkeletonTable } from "@/frontend/components/ui/skeleton";
 import { toast } from "sonner";
-import { useAppSelector } from "@/infrastructure/store/hooks";
+import { useAppSelector } from "@/frontend/store/hooks";
 
 export default function ReviewsPage() {
   const router = useRouter();
@@ -35,7 +35,7 @@ export default function ReviewsPage() {
 
     const fetchApplicationDetail = async () => {
       try {
-        await new Promise((res) => setTimeout(res, 3000));
+        await new Promise((res) => setTimeout(res, 2000));
         const data = await applicationApi.getById(selectedApplicationId);
 
         if (isMounted) {
@@ -107,20 +107,26 @@ export default function ReviewsPage() {
   }, [router, session?.token]);
 
   const handleUpdateApplication = async (updated: Application) => {
-    const prevData = applications;
-
-    setApplications((prev) =>
-      prev.map((item) => (item.id === updated.id ? updated : item))
+    const previousState = [...applications];
+    //console.log("UPDATED:", updated);
+    setApplications(prev => prev.map(item => item.id === updated.id ? updated : item)
     );
-
     setOpenModal(false);
-
+    //setOpenModal(false);
+    if (!session) {
+      toast.error("Sesión no válida");
+      return;
+    }
     try {
-      await applicationApi.update(updated.id, updated);
+      await applicationApi.update(updated.id, updated, session.user);
+      toast.success("Solicitud actualizada correctamente", {
+        position: "top-center",
+        className: "bg-primary text-primary-foreground font-semibold",
+      });
     } catch (error) {
-      console.error(error);
-      setApplications(prevData);
-      toast.error("Error actualizando, se revirtio el cambio", {
+      console.error("Error al actualizar:", error);
+      setApplications(previousState);
+      toast.error("Error de conexión: El cambio no se guardó en el servidor", {
         position: "top-center",
         className: "bg-primary text-primary-foreground font-semibold",
       });
@@ -147,6 +153,7 @@ export default function ReviewsPage() {
   return (
     <>
       <FormViewApplication
+        key={selectedApplicationId || "closed"}
         open={openModal}
         onOpenChange={(open) => {
           setOpenModal(open);

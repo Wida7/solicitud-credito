@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
-import { applicationRepository } from "@/modules/application/repository/applicationRepository";
-import { requireEmployeeAuth } from "@/modules/auth/utils/requireEmployeeAuth";
+import { applicationRepository } from "@/backend/repository/applicationRepository";
+import { requireEmployeeAuth } from "@/backend/services/requireEmployeeAuth";
+import { logUpdateRepository } from "@/backend/repository/logUpdateRepository";
 
 export async function GET(
   req: NextRequest,
@@ -47,8 +48,19 @@ export async function PATCH(
   req: NextRequest,
   context: { params: Promise<{ id: string }> }
 ) {
+
+  // SIMULACIÓN DE ERROR PARA TESTING
+  await new Promise((resolve) => setTimeout(resolve, 2000));
+  if (Math.random() < 0.5) {
+    console.log("SIMULANDO ERROR 500 (Optimistic Test)");
+    return new Response(
+      JSON.stringify({ message: "Error simulado para probar el rollback del front" }),
+      { status: 500 }
+    );
+  }
+
   try {
-    const { error } = requireEmployeeAuth(req);
+    const { error, user } = requireEmployeeAuth(req);
 
     if (error) {
       return error;
@@ -58,6 +70,16 @@ export async function PATCH(
     const body = await req.json();
 
     const updated = await applicationRepository.update(id, body);
+
+    if (user) {
+      logUpdateRepository.create({
+        applicationId: id,
+        userId: user.id_user,
+        username: user.username,
+        updatedFields: body,
+        updatedAt: new Date().toISOString(),
+      }).catch(err => console.error("[PATCH] Error guardando log_update:", err));
+    }
 
     return Response.json(updated);
 

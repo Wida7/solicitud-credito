@@ -1,23 +1,25 @@
 import { Badge } from "@/frontend/components/ui/badge";
-import { Button } from "@/frontend/components/ui/button";
 import { cn } from "@/lib/utils";
 import { formatCurrency } from "@/lib/utils/formatCurrency";
 import { Application } from "@/core/domain/types/application.types";
 import type { ColumnDef } from "@tanstack/react-table";
-import { Eye } from "lucide-react";
 
 const moneyCell = (value: number) => (
   <div className=" font-medium">{formatCurrency(value)}</div>
 );
 
 export const getColumns = (
-  onView: (id: string) => void
 ): ColumnDef<Application>[] => [
   {
     accessorKey: "name",
     header: "Nombre",
     cell: ({ row }) => <div className="font-medium">{row.getValue("name")}</div>,
   },
+  {
+    accessorKey: "identification",
+    header: "Identificación",
+    cell: ({ row }) => <div className="font-medium">{row.getValue("identification")}</div>,
+  },  
   {
     accessorKey: "email",
     header: "Email",
@@ -69,18 +71,5 @@ export const getColumns = (
         </Badge>
       );
     },
-  },
-  {
-  id: "actions",
-  header: "Acciones",
-  cell: ({ row }) => {
-    const application = row.original;
-
-    return (
-      <Button onClick={() => onView(application.id)}>
-        <Eye />
-      </Button>
-    );
-  },
-},
+  }
 ];

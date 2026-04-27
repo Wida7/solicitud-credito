@@ -1,5 +1,5 @@
-import { abandonRepository } from "@/modules/abandon/repository/abandonRepository";
-import { AbandonApplication } from "@/modules/abandon/domain/types/abandon.types";
+import { abandonRepository } from "@/backend/repository/abandonRepository";
+import { AbandonApplication } from "@/core/domain/types/abandon.types";
 
 export async function GET() {
   try {

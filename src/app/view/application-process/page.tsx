@@ -1,25 +1,25 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { useMultiplestepForm } from "@/hooks/useMultiplestepForm";
+import { Button } from "@/frontend/components/ui/button";
+import { useMultiplestepForm } from "@/frontend/hooks/useMultiplestepForm";
 import { AnimatePresence } from "framer-motion";
-import UserInfoForm from "@/components/formMultiStep/UserInfoForm";
-import PlanForm from "@/components/formMultiStep/PlanForm";
-import AddonsForm from "@/components/formMultiStep/AddonsForm";
-import FinalStep from "@/components/formMultiStep/FinalStep";
-import SuccessMessage from "@/components/formMultiStep/SuccessMessage";
-import SideBar from "@/components/formMultiStep/SideBar";
-import { FormItems } from "@/modules/application/domain/types/form.types";
-import { useAppDispatch } from "@/infrastructure/store/hooks";
+import UserInfoForm from "@/frontend/components/organisms/formMultiStep/UserInfoForm";
+import TermsForm from "@/frontend/components/organisms/formMultiStep/TermsForm";
+import FinancialForm from "@/frontend/components/organisms/formMultiStep/FinancialForm";
+import FinalStep from "@/frontend/components/organisms/formMultiStep/FinalStep";
+import SuccessMessage from "@/frontend/components/organisms/formMultiStep/SuccessMessage";
+import SideBar from "@/frontend/components/organisms/formMultiStep/SideBar";
+import { FormItems } from "@/core/domain/types/form.types";
+import { useAppDispatch } from "@/frontend/store/hooks";
 import { canGoNext } from "./validationSteps";
 import { toast } from "sonner";
-import { createApplication } from "@/modules/application/store/applicationThunks";
-import { applicationApi } from "@/modules/application/services/applicationApi";
-import { CreateApplicationInput } from "@/modules/application/domain/types/application.types";
+import { createApplication } from "@/frontend/store/applicationThunks";
+import { applicationApi } from "@/frontend/services/applicationApi";
+import { CreateApplicationInput } from "@/core/domain/types/application.types";
 import { Trash2 } from "lucide-react"
-import AbandonProcess from "@/components/formMultiStep/AbandonProcess";
-import { validateApplicationField } from "@/modules/application/domain/validations/application.validator";
+import AbandonProcess from "@/frontend/components/organisms/formMultiStep/AbandonProcess";
+import { validateApplicationField } from "@/core/validations/application.validator";
 
 
 const initialValues: FormItems = {
@@ -109,7 +109,7 @@ export default function Home() {
 
 
 function updateForm(fieldToUpdate: Partial<FormItems>) {
-  console.log("Validando campo:", fieldToUpdate);
+  //console.log("Validando campo:", fieldToUpdate);
 
   const newErrors = validateApplicationField(fieldToUpdate);
 
@@ -185,10 +185,10 @@ function updateForm(fieldToUpdate: Partial<FormItems>) {
                   />
                 )}
                 {currentStepIndex === 1 && (
-                  <PlanForm key="step2" {...formData} updateForm={updateForm} errors={errors} />
+                  <TermsForm key="step2" {...formData} updateForm={updateForm} errors={errors} />
                 )}
                 {currentStepIndex === 2 && (
-                  <AddonsForm key="step3" {...formData} updateForm={updateForm} />
+                  <FinancialForm key="step3" {...formData} updateForm={updateForm} />
                 )}
                 {currentStepIndex === 3 && (
                   <FinalStep key="step4" {...formData} goTo={goTo} />
