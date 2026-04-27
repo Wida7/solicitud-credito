@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import { applicationRepository } from "@/backend/repository/applicationRepository";
 import { requireEmployeeAuth } from "@/backend/services/requireEmployeeAuth";
+import { logUpdateRepository } from "@/backend/repository/logUpdateRepository";
 
 export async function GET(
   req: NextRequest,
@@ -59,7 +60,7 @@ export async function PATCH(
   }
 
   try {
-    const { error } = requireEmployeeAuth(req);
+    const { error, user } = requireEmployeeAuth(req);
 
     if (error) {
       return error;
@@ -69,6 +70,16 @@ export async function PATCH(
     const body = await req.json();
 
     const updated = await applicationRepository.update(id, body);
+
+    if (user) {
+      logUpdateRepository.create({
+        applicationId: id,
+        userId: user.id_user,
+        username: user.username,
+        updatedFields: body,
+        updatedAt: new Date().toISOString(),
+      }).catch(err => console.error("[PATCH] Error guardando log_update:", err));
+    }
 
     return Response.json(updated);
 

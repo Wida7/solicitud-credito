@@ -1,6 +1,7 @@
 import {
   Application, CreateApplicationInput,
 } from "@/core/domain/types/application.types";
+import { AuthUser } from "@/core/domain/types/auth.types";
 
 import { getClientAuthHeaders } from "@/frontend/utils/clientSession";
 
@@ -81,14 +82,17 @@ export const applicationApi = {
     return res.json();
   },
 
-  update: async (id: string, data: Partial<Application>) => {
+  update: async (id: string, data: Partial<Application>, user: AuthUser) => {
     const res = await fetch(`/api/applications/${id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         ...getClientAuthHeaders(),
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        ...data,
+        user,
+      }),
     });
 
     if (!res.ok) {
@@ -97,6 +101,7 @@ export const applicationApi = {
 
     return res.json();
   },
+
 
   delete: async (id: string) => {
     const res = await fetch(`/api/applications/${id}`, {

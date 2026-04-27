@@ -106,7 +106,6 @@ export default function ReviewsPage() {
     };
   }, [router, session?.token]);
 
-
   const handleUpdateApplication = async (updated: Application) => {
     const previousState = [...applications];
     //console.log("UPDATED:", updated);
@@ -114,9 +113,12 @@ export default function ReviewsPage() {
     );
     setOpenModal(false);
     //setOpenModal(false);
-
+    if (!session) {
+      toast.error("Sesión no válida");
+      return;
+    }
     try {
-      await applicationApi.update(updated.id, updated);
+      await applicationApi.update(updated.id, updated, session.user);
       toast.success("Solicitud actualizada correctamente", {
         position: "top-center",
         className: "bg-primary text-primary-foreground font-semibold",

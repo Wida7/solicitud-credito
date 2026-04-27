@@ -14,3 +14,11 @@ import { Application } from "@/core/domain/types/application.types";
 export type MongoApplication = Omit<Application, "id"> & {
   _id: ObjectId;
 };
+
+export type MongoUpdateLog = {
+  applicationId: string;
+  userId: number;
+  username: string;
+  updatedFields: Partial<Application>;
+  updatedAt: string;
+};
