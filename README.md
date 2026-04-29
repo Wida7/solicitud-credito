@@ -3,6 +3,14 @@
 Aplicación web de **solicitud y gestión de créditos** construida con Next.js 16, React 19 y MongoDB Atlas. Permite a usuarios finales enviar solicitudes de crédito a través de un formulario multi-paso y a empleados administrar dichas solicitudes desde un panel protegido.
 
 ---
+## Usuarios
+
+vista de aplicaciones:
+
+usuario: admin
+contraseña: admin
+
+---
 
 ## Tabla de contenidos
 
