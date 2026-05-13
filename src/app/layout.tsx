@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Figtree } from "next/font/google";
+import { Geist, Geist_Mono, Figtree, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { HeroHeader } from "@/frontend/components/templates/header";
@@ -7,7 +7,7 @@ import { Toaster } from "sonner";
 import ReduxProvider from "@/frontend/providers/ReduxProvider";
 
 
-const figtree = Figtree({ subsets: ['latin'], variable: '--font-sans' });
+const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +32,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-sans", figtree.variable)}
+      className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-sans", inter.variable)}
     >
       <body className="min-h-full flex flex-col" suppressHydrationWarning>
         <ReduxProvider>
